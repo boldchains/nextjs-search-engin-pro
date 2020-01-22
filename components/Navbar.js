@@ -11,6 +11,7 @@ import Button from "components/CustomButtons/Button.js";
 import CustomDropdown from "components/CustomDropdown/CustomDropdown.js";
 
 import profileImage from "assets/img/avatar.jpg";
+import logoImage from "assets/img/logo.png";
 import styles from "assets/jss/components/navbarStyle.js";
 
 const useStyles = makeStyles(styles);
@@ -20,7 +21,7 @@ export default function Navbar() {
     return (
         <nav className={classes.navbar}>
             <Header
-                brand="Vavel search"
+                brand={logoImage}
                 color="dark"
                 rightLinks={
                 <List className={classes.list}>
