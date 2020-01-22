@@ -9,6 +9,7 @@ import Email from "@material-ui/icons/Email";
 import Header from "components/Header/Header.js";
 import Button from "components/CustomButtons/Button.js";
 import CustomDropdown from "components/CustomDropdown/CustomDropdown.js";
+import SearchForm from "components/SearchForm/SearchForm.js";
 
 import profileImage from "assets/img/avatar.jpg";
 import logoImage from "assets/img/logo.png";
@@ -23,28 +24,11 @@ export default function Navbar() {
             <Header
                 brand={logoImage}
                 color="dark"
+                leftLinks={
+                    <SearchForm/>
+                }
                 rightLinks={
                 <List className={classes.list}>
-                    <ListItem className={classes.listItem}>
-                        <Button
-                            href="#pablo"
-                            className={classes.navLink}
-                            onClick={e => e.preventDefault()}
-                            color="transparent"
-                        >
-                            Discover
-                        </Button>
-                    </ListItem>
-                    <ListItem className={classes.listItem}>
-                        <Button
-                            href="#pablo"
-                            className={classes.navLink}
-                            onClick={e => e.preventDefault()}
-                            color="transparent"
-                        >
-                            Wishlist
-                        </Button>
-                    </ListItem>
                     <ListItem className={classes.listItem}>
                         <Button
                             justIcon
