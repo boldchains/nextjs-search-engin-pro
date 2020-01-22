@@ -10,6 +10,7 @@ const searchFormStyle = theme => ({
     margin: "5px 10px",
     msFlexWrap: "wrap",
     msFlexAlign: "stretch",
+    marginTop: "5px",
     borderRadius: "30px 0px 0px 30px",
     backgroundColor: "transparent",
     maxWidth: "600px",
