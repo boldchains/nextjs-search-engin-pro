@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import Layout from "components/Layout/Layout.js";
 
 class About extends Component {
     render() {

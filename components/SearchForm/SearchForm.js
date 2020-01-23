@@ -11,7 +11,7 @@ export default function SearchForm() {
                 <input type="text" className={classes.formControl} placeholder="Search what you want"/>
                 <div className="input-group-append">
                     <div className={classes.inputGroupText}>
-                        <i className="material-icons">search</i>
+                        <i className={`material-icons ${classes.searchButtonIcon}`}>search</i>
                     </div>
                 </div>
             </div>

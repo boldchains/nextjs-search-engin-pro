@@ -1,27 +1,25 @@
 const searchFormStyle = theme => ({
   vCenterForm: {
-    display: "flex",
-    alignItems: "center",
-    margin: 0
+    marginBottom: "10px",
+    marginRight: "20px"
   },
   inputGroup: {
     position: "relative",
     display: "flex",
     margin: "5px 10px",
-    msFlexWrap: "wrap",
-    msFlexAlign: "stretch",
     marginTop: "5px",
     borderRadius: "30px 0px 0px 30px",
     backgroundColor: "transparent",
-    maxWidth: "600px",
-    width: "100%"
+    maxWidth: "720px",
+    width: "100%",
+    height: "calc(1.5em + 0.75rem + 2px)"
   },
   formControl: {
     display: "block",
     width: "100%",
-    height: "calc(1.5em + 0.75rem + 2px)",
-    padding: "1.1rem 0.85rem",
-    fontSize: "1rem",
+    height: "100%",
+    fontSize: "1.4rem",
+    padding: "1.1rem 1.85rem",
     color: "white",
     fontWeight: "700",
     lineHeight: "1.5",
@@ -31,19 +29,24 @@ const searchFormStyle = theme => ({
   },
   inputGroupText: {
     display: "flex",
-    webkitBoxAlign: "center",
-    msFlexAlign: "center",
     alignItems: "center",
+    height: "100%+2px",
     padding: "0.175rem 0.45rem",
     marginBottom: 0,
-    fontSize: "0.875rem",
-    fontWeight: "400",
+    fontSize: "1.4rem",
+    fontWeight: "700",
     lineHeight: "1.5",
     color: "#495057",
     textAlign: "center",
     whiteSpace: "nowrap",
     backgroundColor: "rgba(245, 245, 245, 0.91)",
     borderRadius: "0px 30px 30px 0px",
+  },
+  searchButtonIcon: {
+    fontSize: "32px",
+    paddingTop: "2px",
+    paddingRight: "4px",
+    cursor: "point"
   }
 });
 

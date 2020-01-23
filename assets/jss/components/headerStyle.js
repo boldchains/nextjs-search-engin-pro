@@ -128,9 +128,9 @@ const headerStyle = {
   brand: {
     width: "120px",
     height: "60px",
-    padding: "8px 8px",
+    padding: "3px 5px",
     marginRight: "8px",
-    marginTop: "4px"
+    marginTop: "6px"
   },
   drawerPaper: {
     border: "none",

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Head from 'next/head';
 
-import Navbar from './Navbar/Navbar';
+import Navbar from '../Navbar/Navbar';
 
 class Layout extends Component {
     render() {
@@ -9,7 +9,6 @@ class Layout extends Component {
             <div>
                 <Head>
                     <title>Search Vavel</title>
-                    <link rel="stylesheet" href="https://bootswatch.com/4/sandstone/bootstrap.min.css"/>
                 </Head>
                 <Navbar/>
                 { this.props.children }
