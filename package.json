@@ -7,7 +7,7 @@
     "test": "test",
     "build": "next build",
     "start": "next start",
-    "dev": "next",
+    "dev": "next -p 3010",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && rm -rf .next/ && npm install && npm run dev"
   },
   "repository": {
