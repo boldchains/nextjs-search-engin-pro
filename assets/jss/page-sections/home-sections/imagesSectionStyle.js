@@ -1,9 +1,10 @@
-const videosSectionStyles = ({
+const imagesSectionStyles = ({
     boxedCard: {
-        borderRadius: "0px"
+        borderRadius: "0px",
+        margin: "10px 0px"
     },
     imagesBox: {
-        margin: "20px 18px"
+        margin: "10px 18px"
     },
     title: {
         fontWeight: "700",
@@ -13,4 +14,4 @@ const videosSectionStyles = ({
     }
 });
 
-export default videosSectionStyles;
+export default imagesSectionStyles;

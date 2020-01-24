@@ -1,6 +1,7 @@
 const videosSectionStyles = ({
     boxedCard: {
-        borderRadius: "0px"
+        borderRadius: "0px",
+        margin: "10px 0px"
     },
     videoSlider: {
         margin: "10px"        

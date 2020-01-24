@@ -2,8 +2,8 @@ import { container } from 'assets/jss/material-kit.js';
 
 const videoCardStyle = ({
     videoPlayer: {
-        width: "100%",
-        minHeight: "240px",
+        width: "129px",
+        height: "172px",
         borderRadius: "4px"
     },
     container: {
@@ -12,7 +12,7 @@ const videoCardStyle = ({
         paddingRight: "0px"
     },
     title: {
-        fontSize: "1.3rem",
+        fontSize: "1rem",
         fontWeight: "700",
         maxWidth: "100%"
     },

@@ -1,9 +1,10 @@
-import { container } from 'assets/jss/material-kit.js';
+import { container, boxShadow } from 'assets/jss/material-kit.js';
 
 const imageCardStyle = ({
     image: {
-        width: "100%",
-        height: "100%"
+        marginRight: "10px",
+        marginBottom: "10px",
+        boxShadow: "0 2px 4px 0 rgba(0, 0, 0, 0.34)"
     },
     container
 });

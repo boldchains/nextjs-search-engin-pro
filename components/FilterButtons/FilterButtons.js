@@ -34,12 +34,14 @@ const FilterButtons = (props) => {
     const classes = useStyles();
 
     const buttons = props.tags.map(tag => (
-        <Button size="sm" color="white" round key={tag.tagName} >
-            <div className={classes.flexDiv}>
-                <img className={classes.buttonIcon} src={tag.icon} style={{ display: !tag.icon&&"none"}}/>
-                {tag.tagName}
-            </div>
-        </Button>
+        <div className={classes.button} key={tag.tagName} >
+            <Button size="sm" color="white" round>
+                <div className={classes.flexDiv}>
+                    <img className={classes.buttonIcon} src={tag.icon} style={{ display: !tag.icon&&"none"}}/>
+                    {tag.tagName}
+                </div>
+            </Button>
+        </div>
     ));
 
     const settings = {
@@ -63,7 +65,7 @@ const FilterButtons = (props) => {
             {
                 breakpoint: 480,
                 settings: {
-                    centerMode: true
+                    slidesToScroll: 1
                 }
             }
         ],

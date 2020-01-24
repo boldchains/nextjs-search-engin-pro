@@ -12,11 +12,12 @@ const useStyles = makeStyles(styles);
 const ImagesSection = (props) => {
     const classes = useStyles();
 
+    const maxHeight = 120;
     const imageCards = props.images.map(image => {
-        if (image.height != 180) {
-            const rate = 180/image.height;
+        if (image.height != maxHeight) {
+            const rate = maxHeight/image.height;
             image.width = image.width*rate;
-            image.height = 180;
+            image.height = maxHeight;
         }
         return (
             <ImageCard info={image} key={image.id}/>
