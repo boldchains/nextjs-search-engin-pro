@@ -16,7 +16,6 @@ import Tags from './Tags';
 const useStyles = makeStyles(styles);
 
 async function fetchArticles(params) {
-    console.log(params);
     const proxyUrl = "https://cors-anywhere.herokuapp.com/";
     let url = `https://search.vavel.com/api/articles?l=${params.lang}&page=${params.page}`;
     if (params.query && params.query !== '') {
@@ -97,7 +96,7 @@ const TotalSection = () => {
     let imageData = articles.data.map((image, index) => {
         return {
             key: index.toString(),
-            src: image.image.url?image.image.url:failedImage,
+            src: image.image.url?image.image.url:process.env.host+failedImage,
             photo: image,
             width: 4,
             height: 3
