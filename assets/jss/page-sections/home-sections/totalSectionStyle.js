@@ -5,6 +5,11 @@ const totalSectionStyle = ({
     },
     gridGallery: {
         margin: "0px 10px"
+    },
+    loading: {
+        display: "inline-block",
+        margin: "0 auto",
+        padding: "3px",
     }
 });
 
