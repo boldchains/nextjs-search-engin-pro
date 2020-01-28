@@ -1,7 +1,7 @@
-import { SET_SEARCH_KEY, SEARCH_VIDEOS, CLEAR_VIDEOS } from './actionTypes';
+import { SET_SEARCH_KEY, SET_VIDEOS, CLEAR_VIDEOS, SET_IS_FETCHING } from './actionTypes';
 
-export const searchVideos = videos => {
-    return { type: SEARCH_VIDEOS, payload: videos };
+export const setVideos = videos => {
+    return { type: SET_VIDEOS, payload: videos };
 };
 
 export const setSearchKey = searchKey => {
@@ -11,3 +11,7 @@ export const setSearchKey = searchKey => {
 export const clearArticles = () => {
     return { type: CLEAR_VIDEOS, payload: '' };
 };
+
+export const setIsFetching = (flag) => {
+    return { type: SET_IS_FETCHING, payload: flag}
+}
