@@ -59,7 +59,7 @@ const VideosSection = () => {
     const classes = useStyles();
     const videos = useFetchVideos();
 
-    const videoCards = videos.items.map((video, index) => (
+    const videoCards = videos.items&&videos.items.map((video, index) => (
         <VideoCard info={video} key={index}/>
     ));
     
@@ -75,14 +75,19 @@ const VideosSection = () => {
     };
 
     return (
-        <Card className={ classes.boxedCard }>
-            <div className={ classes.title }>Videos</div>
-            <div className={ classes.videoSlider }>
-                <Slider {...settings}>
-                    { videoCards }
-                </Slider>
-            </div>
-        </Card>
+        <div>
+            {
+                videoCards&&
+                <Card className={ classes.boxedCard }>
+                    <div className={ classes.title }>Videos</div>
+                    <div className={ classes.videoSlider }>
+                        <Slider {...settings}>
+                            { videoCards }
+                        </Slider>
+                    </div>
+                </Card>
+            }
+        </div>
     );
 };
 
