@@ -1,4 +1,4 @@
-export const SET_LANGUAGE = 'SET_LANGUAGE';
-export const ADD_ARTICLES = 'ADD_ARTICLES';
-export const CLEAR_ARTICLES = 'CLEAR_ARTICLES';
+export const SEARCH_VIDEOS = 'SEARCH_VIDEOS';
+export const CLEAR_VIDEOS = 'CLEAR_VIDEOS';
 export const SET_SEARCH_KEY = 'SET_SEARCH_KEY';
+export const SET_IS_FETCHING = 'SET_IS_FETCHING';
