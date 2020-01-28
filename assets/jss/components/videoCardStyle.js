@@ -16,6 +16,10 @@ const videoCardStyle = ({
         margin: "0px 10px",
         borderRadius: "3px"
     },
+    loaderItem: {
+        width: "100%",
+        height: "14rem"
+    },
     description: {
         margin: "5px"
     },
