@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addArticles } from 'services/reducers/articles/actions';
 
-import { makeStyles, Box, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import Card from 'components/Card/Card.js';
 import Skeleton from '@material-ui/lab/Skeleton';
 import GridContainer from 'components/Grid/GridContainer.js';
-import GridItem from 'components/Grid/GridItem.js';
 import ArticleCard from 'components/ArticleCard/ArticleCard.js';
 import FilterButtons from 'components/FilterButtons/FilterButtons.js';
 
