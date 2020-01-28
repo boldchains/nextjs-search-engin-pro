@@ -23,7 +23,7 @@ const useFetchVideoDetails = (videoId) => {
     }
 
     useEffect(() => {
-        fetchVideohandler();
+        // fetchVideohandler();
     }, []);
 
     return video;
@@ -33,20 +33,16 @@ const VideoCard = (props) => {
 
     const classes = useStyles();
     const video = useFetchVideoDetails(props.info.id.videoId);
-    const [pageLoaded, setPageLoaded] = useState(false);
+    const isLoaded = props.isLoaded;
 
     const videoUrl = `https://www.youtube.com/embed/${props.info.id.videoId}?showinfo=0&enablejsapi=1&origin=${process.env.host}`;
-
-    useEffect(() => {
-        setPageLoaded(true);
-    }, [])
 
     const thumbnail = props.info.snippet.thumbnails.medium;
 
     return (
         <div className={classes.container}>
             {
-                pageLoaded?(
+                isLoaded?(
                     <Card className={classes.videoCard}>
                         <img src={thumbnail.url} width={"100%"} />
                         <div className={ classes.description }>

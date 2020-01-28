@@ -14,12 +14,10 @@ import styles from 'assets/jss/page-sections/home-sections/videosSectionStyle.js
 const useStyles = makeStyles(styles);
 
 async function fetchVideos(params) {
-    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet,statistics&q=${params.query}&maxResults=${params.count}&key=${process.env.apiKey}`;
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${params.query}&maxResults=${params.count}&key=${process.env.apiKey}`;
 
     const response = await fetch(url);
     const jsonResponse = await response.json();
-    // const nextPageToken = jsonResponse.nextPageToken;
-    // const prevPageToken = jsonResponse.prevPageToken;
     return jsonResponse.items;
 }
 
@@ -60,7 +58,7 @@ const VideosSection = () => {
     const videos = useFetchVideos();
 
     const videoCards = videos.items&&videos.items.map((video, index) => (
-        <VideoCard info={video} key={index}/>
+        <VideoCard info={ video } key={ index } isLoaded={ videos.isLoading }/>
     ));
     
     const settings = {

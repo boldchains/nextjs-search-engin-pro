@@ -97,14 +97,14 @@ const TotalSection = () => {
     const articles = useFetchArticles();
     const showGallery = useShowGallery(false);
 
-    const imageData = articles.data.map((image, index) => {
+    const imageData = articles.data.map((item, index) => {
         return {
             key: ((articles.page*20)+index).toString(),
-            src: image.image.url?image.image.url:process.env.host+failedImage,
+            src: item.image.url?item.image.url:process.env.host+failedImage,
             state: articles.isFetching,
-            photo: image,
-            width: 4,
-            height: 3
+            photo: item,
+            width: 16,
+            height: 9
         };
     });
 
@@ -113,7 +113,7 @@ const TotalSection = () => {
             <FilterButtons tags={Tags}/>
             {
                 <div id="gallery">
-                    { showGallery && <Gallery photos={imageData} columns={5} renderImage={ArticleCard} margin={5} /> }
+                    { showGallery && <Gallery photos={imageData} columns={200} renderImage={ArticleCard} /> }
                 </div>
             }
         </Card>
