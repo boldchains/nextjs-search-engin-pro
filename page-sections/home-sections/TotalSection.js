@@ -112,9 +112,8 @@ const TotalSection = () => {
             {
                 <div id="gallery">
                     { showGallery && <Gallery photos={imageData} columns={5} renderImage={ArticleCard} margin={5} /> }
-                    { 
-                        showGallery&&
-                        // ( && !articles.isFetching) &&
+                    {
+                        (showGallery && articles.isFetching) &&
                         <GridContainer className={classes.loader}>
                             {
                                 Array.from(new Array(5)).map((item, index)=>(
