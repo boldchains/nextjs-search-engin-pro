@@ -10,6 +10,7 @@ module.exports = withPlugins([[withSass], [withImages]], {
     return config;
   },
   env: {
-    host: 'http://localhost:3010'
+    host: 'http://localhost:3010',
+    apiKey: 'AIzaSyAORkBpsjGKYeI4SFJo739BwWmU-IK0B0o'
   }
 });
