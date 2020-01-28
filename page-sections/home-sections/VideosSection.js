@@ -67,6 +67,7 @@ const VideosSection = () => {
         dots: false,
         infinite: false,
         speed: 500,
+        margin: 4,
         slidesToShow: 1,
         slidesToScroll: 1,
         variableWidth: true,
@@ -78,7 +79,7 @@ const VideosSection = () => {
             <div className={ classes.title }>Videos</div>
             <div className={ classes.videoSlider }>
                 <Slider {...settings}>
-                    {videoCards}
+                    { videoCards }
                 </Slider>
             </div>
         </Card>

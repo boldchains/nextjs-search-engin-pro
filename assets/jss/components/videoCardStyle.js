@@ -7,18 +7,28 @@ const videoCardStyle = ({
         borderRadius: "4px"
     },
     container: {
-        ...container,
-        paddingLeft: "10px",
-        paddingRight: "0px"
+        marginTop: "3px",
+        marginBottom: "3px",
+        width: "14rem",
+        marginRight: "10px"
+    },
+    videoCard: {
+        margin: "0px 10px",
+        borderRadius: "3px"
+    },
+    description: {
+        margin: "5px"
     },
     title: {
         fontSize: "1rem",
         fontWeight: "700",
-        width: "129px",
+        display: "block",
         maxWidth: "100%",
-        textOverflow: "ellipsis",
-        whiteSpace: "nowrap",
-        overflow: "hidden"
+        height: "48px",
+        margin: "0 auto",
+        lineHeight: 1,
+        overflow: "hidden",
+        textOverflow: "ellipsis"
     },
     viewsCount: {
         fontWeight: "700",

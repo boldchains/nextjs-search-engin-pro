@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core';
+import Card from 'components/Card/Card.js';
 import ReactPlayer from 'react-player';
 
 import styles from 'assets/jss/components/videoCardStyle.js';
@@ -9,16 +10,30 @@ const useStyles = makeStyles(styles);
 
 const VideoCard = (props) => {
 
-    console.log("video info:", `https://youtu.be/${props.info.id.videoId}`);
     const classes = useStyles();
+    const [pageLoaded, setPageLoaded] = useState(false);
+
+    const videoUrl = `https://www.youtube.com/embed/${props.info.id.videoId}?showinfo=0&enablejsapi=1&origin=${process.env.host}`;
+    console.log(props.info);
+
+    useEffect(() => {
+        setPageLoaded(true);
+    }, [])
+
+    const thumbnail = props.info.snippet.thumbnails.medium;
 
     return (
         <div className={classes.container}>
-            <ReactPlayer className={classes.videoPlayer} width={129} height={172} url={`https://youtu.be/${props.info.id.videoId}`} controls autoPlay/>
-            <div>
-                <div className={classes.title}>{props.info.snippet.title}</div>
-                <div className={classes.viewsCount}>{`${props.info.views?props.info.views:0} views`}</div>
-            </div>
+            <Card className={classes.videoCard}>
+                { 
+                    pageLoaded&&
+                    <img src={thumbnail.url} width={"100%"} />
+                }
+                <div className={ classes.description }>
+                    <div className={classes.title}>{props.info.snippet.title}</div>
+                    <div className={classes.viewsCount}>{`${props.info.views?props.info.views:0} views`}</div>
+                </div>
+            </Card>
         </div>
     );
 };
