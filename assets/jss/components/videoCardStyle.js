@@ -14,7 +14,11 @@ const videoCardStyle = ({
     title: {
         fontSize: "1rem",
         fontWeight: "700",
-        maxWidth: "100%"
+        width: "129px",
+        maxWidth: "100%",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden"
     },
     viewsCount: {
         fontWeight: "700",
