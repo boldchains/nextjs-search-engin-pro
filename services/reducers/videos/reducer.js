@@ -1,7 +1,8 @@
-import { SET_SEARCH_KEY, SEARCH_VIDEOS, CLEAR_VIDEOS } from './actionTypes';
+import { SET_SEARCH_KEY, SEARCH_VIDEOS, CLEAR_VIDEOS, SET_IS_FETCHING } from './actionTypes';
 
 const initialState = {
     searchKey: "",
+    isFetching: false,
     data: []
 };
 
@@ -22,6 +23,11 @@ export default function (state = initialState, {type, payload}) {
                 ...state,
                 data: []
             };
+        case SET_IS_FETCHING:
+            return {
+                ...state,
+                isFetching: payload
+            }
         default:
             return state;
     }
