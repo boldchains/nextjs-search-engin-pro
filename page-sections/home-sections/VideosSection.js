@@ -14,7 +14,7 @@ import styles from 'assets/jss/page-sections/home-sections/videosSectionStyle.js
 const useStyles = makeStyles(styles);
 
 async function fetchVideos(params) {
-    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${params.query}&maxResults=${params.count}&key=${process.env.apiKey}`;
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet,statistics&q=${params.query}&maxResults=${params.count}&key=${process.env.apiKey}`;
 
     const response = await fetch(url);
     const jsonResponse = await response.json();
