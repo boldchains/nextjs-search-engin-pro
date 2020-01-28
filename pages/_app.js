@@ -44,6 +44,16 @@ export default class MyApp extends App {
           <title>Vavel Search</title>
         </Head>
         <Component {...pageProps} />
+        <style jsx global>{`
+            body {
+              background-color: #e5e5e5;
+              color: #3c4858;
+              margin: 0;
+              font-size: 1rem;
+              text-align: left;
+              font-family: Montserrat, Arial, Tahoma;
+            }
+				`}</style>
       </React.Fragment>
     );
   }
