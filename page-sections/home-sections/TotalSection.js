@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addArticles } from 'services/reducers/articles/actions';
 
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Box, Typography } from '@material-ui/core';
 import Card from 'components/Card/Card.js';
+import Skeleton from '@material-ui/lab/Skeleton';
+import GridContainer from 'components/Grid/GridContainer.js';
+import GridItem from 'components/Grid/GridItem.js';
 import ArticleCard from 'components/ArticleCard/ArticleCard.js';
 import FilterButtons from 'components/FilterButtons/FilterButtons.js';
 
@@ -37,14 +40,15 @@ function useFetchArticles() {
     const lang = useSelector(state => state.articles.lang);
 
     async function fetchArticlesHandler() {
+        setIsFetching(true);
         const fetchedData = await fetchArticles({
             page: articlesPage,
             query: searchKey,
             lang: lang
         });
+        setIsFetching(false);
 
         dispatch(addArticles(fetchedData));
-        setIsFetching(false);
     }
 
     useEffect(() => {
@@ -93,7 +97,7 @@ const TotalSection = () => {
     const articles = useFetchArticles();
     const showGallery = useShowGallery(false);
 
-    let imageData = articles.data.map((image, index) => {
+    const imageData = articles.data.map((image, index) => {
         return {
             key: index.toString(),
             src: image.image.url?image.image.url:process.env.host+failedImage,
@@ -106,19 +110,26 @@ const TotalSection = () => {
     return (
         <Card className={classes.boxedCard}>
             <FilterButtons tags={Tags}/>
-            <div id="gallery">
-                {
-                    showGallery && <Gallery photos={imageData} columns={5} renderImage={ArticleCard} />
-                }
-            </div>
-            <div>
-                { 
-                    articles.isFetching && 
-                    <div className={classes.loading}>
-                        Loading...
-                    </div>
-                }
-            </div>
+            {
+                <div id="gallery">
+                    { showGallery && <Gallery photos={imageData} columns={5} renderImage={ArticleCard} margin={5} /> }
+                    { 
+                        showGallery&&
+                        // ( && !articles.isFetching) &&
+                        <GridContainer className={classes.loader}>
+                            {
+                                Array.from(new Array(5)).map((item, index)=>(
+                                    <div key={ index } className={ classes.loaderItem }>
+                                        <Skeleton variant="rect" width={"100%"} height={"80%"} style={{ margin: "5px 0 0 5px" }} />
+                                        <Skeleton variant="rect" width={"100%"} height={"5%"} style={{ margin: "5px 0 0 5px", borderRadius: "3px" }} />
+                                        <Skeleton variant="rect" width={"80%"} height={"5%"} style={{ margin: "5px 0 0 5px", borderRadius: "3px" }} />
+                                    </div>
+                                ))
+                            }
+                        </GridContainer>
+                    }
+                </div>
+            }
         </Card>
     );
 };

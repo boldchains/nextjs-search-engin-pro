@@ -1,4 +1,5 @@
 import React from 'react';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 const getResizedImageUrl = (props) => {
     const resizeImageProxy = `/cdn-cgi/image/width=${props.width},height=${props.height}`;
@@ -11,23 +12,26 @@ const getResizedImageUrl = (props) => {
 const ArticleCard = ({
     index,
     margin,
-    photo
+    photo,
+    width,
+    height
 }) => {
 
+    const params = {
+        url: photo.src,
+        width: photo.width,
+        height: photo.height*0.8
+    };
+    
     let resizedUrl = photo.src;
     if (photo.src && photo.src.startsWith('https')) {
-        const params = {
-            url: photo.src,
-            width: photo.width,
-            height: photo.height
-        }
         resizedUrl = getResizedImageUrl(params);
     }
 
-    return (
+    return resizedUrl!=='' ? (
         <div key={index} style={{ margin, height: photo.height, width: photo.width }}>
             <div className="mask">
-                <img src={resizedUrl} width={photo.width} height={"80%"}/>
+                <img src={resizedUrl} width={params.width} height={params.height}/>
                 <div className="article-title">
                     {photo.photo.title}
                 </div>
@@ -47,6 +51,8 @@ const ArticleCard = ({
                 }
             `}</style>
         </div>
+    ) : (
+        <Skeleton variant="rect" width={width} height={height} />
     );
 };
 
