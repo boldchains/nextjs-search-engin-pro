@@ -1,4 +1,4 @@
-import { SET_SEARCH_KEY, SET_VIDEOS, CLEAR_VIDEOS, SET_IS_FETCHING } from './actionTypes';
+import { SET_SEARCH_KEY, SET_VIDEOS, SET_IS_FETCHING } from './actionTypes';
 
 const initialState = {
     searchKey: "",
@@ -16,12 +16,7 @@ export default function (state = initialState, {type, payload}) {
         case SET_VIDEOS:
             return {
                 ...state,
-                data: [...state.data, ...payload]
-            };
-        case CLEAR_VIDEOS:
-            return {
-                ...state,
-                data: []
+                data: payload
             };
         case SET_IS_FETCHING:
             return {
