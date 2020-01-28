@@ -12,9 +12,7 @@ const getResizedImageUrl = (props) => {
 const ArticleCard = ({
     index,
     margin,
-    photo,
-    width,
-    height
+    photo
 }) => {
 
     const params = {
@@ -22,13 +20,13 @@ const ArticleCard = ({
         width: photo.width,
         height: photo.height*0.8
     };
-    
+
     let resizedUrl = photo.src;
     if (photo.src && photo.src.startsWith('https')) {
         resizedUrl = getResizedImageUrl(params);
     }
 
-    return resizedUrl!=='' ? (
+    return !photo.state ? (
         <div key={index} style={{ margin, height: photo.height, width: photo.width }}>
             <div className="mask">
                 <img src={resizedUrl} width={params.width} height={params.height}/>
@@ -52,7 +50,11 @@ const ArticleCard = ({
             `}</style>
         </div>
     ) : (
-        <Skeleton variant="rect" width={width} height={height} />
+        <div key={`loading-${index}`} style={{ margin, height: photo.height, width: photo.width }} >
+            <Skeleton variant="rect" width={"100%"} height={"80%"} style={{ margin: "5px 0 0 5px" }} />
+            <Skeleton variant="rect" width={"100%"} height={"5%"} style={{ margin: "5px 0 0 5px", borderRadius: "3px" }} />
+            <Skeleton variant="rect" width={"80%"} height={"5%"} style={{ margin: "5px 0 0 5px", borderRadius: "3px" }} />
+        </div>
     );
 };
 

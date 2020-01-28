@@ -76,7 +76,8 @@ function useFetchArticles() {
 
     return {
         data: articles,
-        isFetching: isFetching,
+        page: articlesPage,
+        isFetching: isFetching
     }
 }
 
@@ -98,8 +99,9 @@ const TotalSection = () => {
 
     const imageData = articles.data.map((image, index) => {
         return {
-            key: index.toString(),
+            key: ((articles.page*20)+index).toString(),
             src: image.image.url?image.image.url:process.env.host+failedImage,
+            state: articles.isFetching,
             photo: image,
             width: 4,
             height: 3
@@ -112,20 +114,6 @@ const TotalSection = () => {
             {
                 <div id="gallery">
                     { showGallery && <Gallery photos={imageData} columns={5} renderImage={ArticleCard} margin={5} /> }
-                    {
-                        (showGallery && articles.isFetching) &&
-                        <GridContainer className={classes.loader}>
-                            {
-                                Array.from(new Array(5)).map((item, index)=>(
-                                    <div key={ index } className={ classes.loaderItem }>
-                                        <Skeleton variant="rect" width={"100%"} height={"80%"} style={{ margin: "5px 0 0 5px" }} />
-                                        <Skeleton variant="rect" width={"100%"} height={"5%"} style={{ margin: "5px 0 0 5px", borderRadius: "3px" }} />
-                                        <Skeleton variant="rect" width={"80%"} height={"5%"} style={{ margin: "5px 0 0 5px", borderRadius: "3px" }} />
-                                    </div>
-                                ))
-                            }
-                        </GridContainer>
-                    }
                 </div>
             }
         </Card>
