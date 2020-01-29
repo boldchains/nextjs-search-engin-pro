@@ -9,6 +9,6 @@ class _error extends Component {
   render() {
     return <div />;
   }
-};
+}
 
 export default _error;
