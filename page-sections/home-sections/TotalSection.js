@@ -10,7 +10,6 @@ import FilterButtons from "components/FilterButtons/FilterButtons.js";
 import Gallery from "react-photo-gallery";
 import styles from "assets/jss/page-sections/home-sections/totalSectionStyle.js";
 
-import failedImage from "assets/img/fotografo.jpg";
 import { CORS_PROXY_URL, ARTICLES_API_URL } from "utils/Consts.js";
 
 const useStyles = makeStyles(styles);
