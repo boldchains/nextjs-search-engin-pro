@@ -96,7 +96,7 @@ const TotalSection = () => {
   const imageData = articles.data.map((item, index) => {
     return {
       key: (articles.page * 20 + index).toString(),
-      src: item.image.url,
+      src: item.image.url ? item.image.url : "",
       state: articles.isFetching,
       photo: item,
       width: 4,
