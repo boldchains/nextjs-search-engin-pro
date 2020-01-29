@@ -1,27 +1,22 @@
 import { container } from "assets/jss/material-kit.js";
 
 const videoCardStyle = {
-  videoPlayer: {
-    width: "129px",
-    height: "172px",
-    borderRadius: "4px"
-  },
   container: {
     marginTop: "3px",
     marginBottom: "3px",
-    width: "14rem",
+    maxWidth: "14rem",
     marginRight: "10px"
   },
   videoCard: {
-    margin: "0px 10px",
+    margin: "0px",
     borderRadius: "3px"
   },
-  loaderItem: {
-    width: "100%",
-    height: "14rem"
-  },
   description: {
-    margin: "5px"
+    margin: "10px"
+  },
+  preloader: {
+    marginTop: "5px",
+    borderRadius: "3px"
   },
   title: {
     fontSize: "1rem",
