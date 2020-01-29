@@ -92,6 +92,7 @@ function useShowGallery(initialState) {
 
 const useFetchTags = () => {
   const tags = useSelector(state => state.searchStates.articleTags);
+  const searchKey = useSelector(state => state.searchStates.searchKey);
   const [isFetching, setIsFetching] = useState(false);
 
   const dispatch = useDispatch();
@@ -99,7 +100,6 @@ const useFetchTags = () => {
   const fetchHandler = async () => {
     setIsFetching(false);
     const fetchedData = await fetchTags();
-    fetchedData.unshift({ _id: "All", selected: true });
     setIsFetching(true);
 
     dispatch(setArticleTags(fetchedData));
@@ -111,13 +111,13 @@ const useFetchTags = () => {
       clonedTags.map((item, idx) => {
         item.selected = idx === index;
       });
-
+    clonedTags.shift();
     dispatch(setArticleTags(clonedTags));
   };
 
   useEffect(() => {
-    fetchHandler();
-  }, []);
+    searchKey && searchKey !== "" && fetchHandler();
+  }, [searchKey]);
 
   return {
     data: tags,

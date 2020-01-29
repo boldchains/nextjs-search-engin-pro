@@ -9,14 +9,16 @@ import {
   SET_ARTICLE_TAGS
 } from "./actionTypes";
 
+const defaultTag = { _id: "All", selected: true };
+
 const initialState = {
   searchKey: "",
   lang: "en",
   articles: [],
   videos: [],
   images: [],
-  articleTags: [],
-  categoryTags: [],
+  articleTags: [defaultTag],
+  categoryTags: [defaultTag],
   page: 1
 };
 
@@ -35,12 +37,18 @@ export default function(state = initialState, { type, payload }) {
     case SET_CATEGORY_TAGS:
       return {
         ...state,
-        categoryTags: payload
+        categoryTags:
+          payload && payload.length > 0
+            ? [defaultTag, ...payload]
+            : [defaultTag]
       };
     case SET_ARTICLE_TAGS:
       return {
         ...state,
-        articleTags: payload
+        articleTags:
+          payload && payload.length > 0
+            ? [defaultTag, ...payload]
+            : [defaultTag]
       };
     case SET_VIDEOS:
       return {

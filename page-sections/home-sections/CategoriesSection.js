@@ -14,6 +14,7 @@ const useStyles = makeStyles(styles);
 
 const useFetchTags = () => {
   const tags = useSelector(state => state.searchStates.categoryTags);
+  const searchKey = useSelector(state => state.searchStates.searchKey);
   const [isFetching, setIsFetching] = useState(false);
 
   const dispatch = useDispatch();
@@ -21,15 +22,14 @@ const useFetchTags = () => {
   const fetchHandler = async () => {
     setIsFetching(false);
     const fetchedData = await fetchTags();
-    fetchedData.unshift({ _id: "All", selected: true });
     setIsFetching(true);
 
     dispatch(setCategoryTags(fetchedData));
   };
 
   useEffect(() => {
-    fetchHandler();
-  }, []);
+    searchKey && searchKey !== "" && fetchHandler();
+  }, [searchKey]);
 
   const onSelect = index => {
     const clonedTags = [...tags];
@@ -38,6 +38,7 @@ const useFetchTags = () => {
         item.selected = idx === index;
       });
 
+    clonedTags.shift();
     dispatch(setCategoryTags(clonedTags));
   };
 
