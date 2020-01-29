@@ -20,8 +20,6 @@ const fetchImages = async params => {
   const resp = await fetch(CORS_PROXY_URL + url);
   const images = await resp.json();
 
-  console.log("images", images);
-
   return images;
 };
 
@@ -83,7 +81,7 @@ const ImagesSection = () => {
 
   return (
     <div>
-      {images.data && (
+      {images.data && images.data.length !== 0 && (
         <Card className={classes.boxedCard}>
           <div className={classes.title}>Images</div>
           <div className={classes.imagesBox}>
