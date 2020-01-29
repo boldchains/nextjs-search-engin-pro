@@ -9,15 +9,27 @@ import Button from "components/CustomButtons/Button";
 import { setTags, setIsFetching } from "services/reducers/tags/actions";
 
 import styles from "assets/jss/components/filterButtonsStyle.js";
-import { CORS_PROXY_URL, TAGS_API_URL } from "utils/Consts";
+import { CORS_PROXY_URL, TAGS_API_URL, PHOTO_STATIC_URL } from "utils/Consts";
 
 const useStyles = makeStyles(styles);
 
 const fetchTags = async () => {
   const resp = await fetch(CORS_PROXY_URL + TAGS_API_URL);
   const tags = await resp.json();
-  console.log(tags);
-  return tags.listtags;
+
+  tags.listtags = tags.listtags || [];
+  tags.listtags = tags.listtags.map(item => {
+    if (item.tag && item.tag.logo) item.logo = PHOTO_STATIC_URL + item.tag.logo;
+    else {
+      let find = item.list_tags.find(i => i.logo);
+      if (find) {
+        item.logo = PHOTO_STATIC_URL + find.logo;
+      }
+    }
+    return item;
+  });
+
+  return tags.listtags.slice(0, 20);
 };
 
 const useFetchTags = () => {
@@ -29,7 +41,7 @@ const useFetchTags = () => {
   const fetchHandler = async () => {
     setIsFetching(false);
     const fetchedData = await fetchTags();
-    fetchedData.unshift({ tagName: "All" });
+    fetchedData.unshift({ _id: "All" });
     setIsFetching(true);
 
     dispatch(setTags(fetchedData));
@@ -66,23 +78,23 @@ const FilterButtons = () => {
   const classes = useStyles();
   const tags = useFetchTags();
 
-  console.log(tags.data);
-  const buttons =
-    tags.data &&
-    tags.data.map(tag => (
-      <div className={classes.button} key={tag._id}>
-        <Button size="sm" color="white" round>
-          <div className={classes.flexDiv}>
-            <img
-              className={classes.buttonIcon}
-              src={tag.icon}
-              style={{ display: !tag.icon && "none" }}
-            />
-            {tag.tagName}
-          </div>
-        </Button>
-      </div>
-    ));
+  const onSelectTag = (e, index) => {};
+  const buttons = tags.data.map((tag, index) => (
+    <div className={classes.button}>
+      <Button
+        size="sm"
+        color={tag.selected ? "primary" : "white"}
+        key={index}
+        onClick={event => onSelectTag(event, index)}
+        round
+      >
+        <div className={classes.flexDiv}>
+          {tag.logo && <img className={classes.buttonIcon} src={tag.logo} />}
+          {tag._id}
+        </div>
+      </Button>
+    </div>
+  ));
 
   const settings = {
     className: "slider variable-width",
