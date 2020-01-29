@@ -3,10 +3,15 @@ import {
   SET_SEARCH_KEY,
   ADD_ARTICLES,
   CLEAR_ARTICLES,
-  SET_TAGS,
+  SET_ARTICLE_TAGS,
+  SET_CATEGORY_TAGS,
   SET_IMAGES,
   SET_VIDEOS
 } from "./actionTypes";
+
+export const setLanugage = lang => {
+  return { type: SET_LANGUAGE, payload: lang };
+};
 
 export const addArticles = articles => {
   return { type: ADD_ARTICLES, payload: articles };
@@ -20,12 +25,16 @@ export const clearArticles = () => {
   return { type: CLEAR_ARTICLES, payload: "" };
 };
 
-export const setTags = videos => {
-  return { type: SET_TAGS, payload: videos };
+export const setArticleTags = tags => {
+  return { type: SET_ARTICLE_TAGS, payload: tags };
 };
 
-export const setImages = videos => {
-  return { type: SET_IMAGES, payload: videos };
+export const setCategoryTags = tags => {
+  return { type: SET_CATEGORY_TAGS, payload: tags };
+};
+
+export const setImages = images => {
+  return { type: SET_IMAGES, payload: images };
 };
 
 export const setVideos = videos => {

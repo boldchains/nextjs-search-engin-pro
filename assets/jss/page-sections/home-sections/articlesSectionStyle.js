@@ -1,4 +1,4 @@
-const totalSectionStyle = {
+const articlesSectionStyle = {
   boxedCard: {
     borderRadius: "0px",
     margin: "10px 0px"
@@ -33,4 +33,4 @@ const totalSectionStyle = {
   }
 };
 
-export default totalSectionStyle;
+export default articlesSectionStyle;

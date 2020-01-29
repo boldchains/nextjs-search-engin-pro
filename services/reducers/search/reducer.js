@@ -5,7 +5,8 @@ import {
   CLEAR_ARTICLES,
   SET_VIDEOS,
   SET_IMAGES,
-  SET_TAGS
+  SET_CATEGORY_TAGS,
+  SET_ARTICLE_TAGS
 } from "./actionTypes";
 
 const initialState = {
@@ -14,7 +15,8 @@ const initialState = {
   articles: [],
   videos: [],
   images: [],
-  tags: [],
+  articleTags: [],
+  categoryTags: [],
   page: 1
 };
 
@@ -30,10 +32,15 @@ export default function(state = initialState, { type, payload }) {
         ...state,
         searchKey: payload
       };
-    case SET_TAGS:
+    case SET_CATEGORY_TAGS:
       return {
         ...state,
-        tags: payload
+        categoryTags: payload
+      };
+    case SET_ARTICLE_TAGS:
+      return {
+        ...state,
+        articleTags: payload
       };
     case SET_VIDEOS:
       return {

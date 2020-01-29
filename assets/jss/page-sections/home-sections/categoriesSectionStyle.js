@@ -1,7 +1,7 @@
 import { container } from "assets/jss/material-kit.js";
 
-const typeFilterSectionStyle = {
+const categoriesSectionStyle = {
   ...container
 };
 
-export default typeFilterSectionStyle;
+export default categoriesSectionStyle;

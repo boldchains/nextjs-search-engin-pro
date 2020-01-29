@@ -1,6 +1,6 @@
 import { container } from "assets/jss/material-kit.js";
 
-const filterButtonsStyle = {
+const tagsStyle = {
   ...container,
   buttonIcon: {
     width: "20px",
@@ -49,4 +49,4 @@ const filterButtonsStyle = {
   }
 };
 
-export default filterButtonsStyle;
+export default tagsStyle;

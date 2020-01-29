@@ -20,6 +20,8 @@ const fetchImages = async params => {
   const resp = await fetch(CORS_PROXY_URL + url);
   const images = await resp.json();
 
+  console.log("images:", images);
+
   return images;
 };
 

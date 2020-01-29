@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addArticles } from "services/reducers/search/actions.js";
+import {
+  addArticles,
+  setArticleTags
+} from "services/reducers/search/actions.js";
 
 import { makeStyles } from "@material-ui/core";
 import Card from "components/Card/Card.js";
 import ArticleCard from "components/ArticleCard/ArticleCard.js";
-import FilterButtons from "components/FilterButtons/FilterButtons.js";
+import Tags, { fetchTags } from "components/Tags/Tags.js";
 
 import Gallery from "react-photo-gallery";
-import styles from "assets/jss/page-sections/home-sections/totalSectionStyle.js";
+import styles from "assets/jss/page-sections/home-sections/articlesSectionStyle.js";
 
 import { CORS_PROXY_URL, ARTICLES_API_URL } from "utils/Consts.js";
 
@@ -87,9 +90,35 @@ function useShowGallery(initialState) {
   return showGallery;
 }
 
+const useFetchTags = () => {
+  const tags = useSelector(state => state.searchStates.articleTags);
+  const [isFetching, setIsFetching] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const fetchHandler = async () => {
+    setIsFetching(false);
+    const fetchedData = await fetchTags();
+    fetchedData.unshift({ _id: "All", selected: true });
+    setIsFetching(true);
+
+    dispatch(setArticleTags(fetchedData));
+  };
+
+  useEffect(() => {
+    fetchHandler();
+  }, []);
+
+  return {
+    data: tags,
+    isFetching: isFetching
+  };
+};
+
 const TotalSection = () => {
   const classes = useStyles();
 
+  const articleTags = useFetchTags();
   const articles = useFetchArticles();
   const showGallery = useShowGallery(false);
 
@@ -106,7 +135,7 @@ const TotalSection = () => {
 
   return (
     <Card className={classes.boxedCard}>
-      <FilterButtons />
+      <Tags tags={articleTags} />
       {
         <div id="gallery">
           {showGallery && (
