@@ -15,9 +15,10 @@ import { CORS_PROXY_URL, IMAGES_API_URL } from "utils/Consts.js";
 const useStyles = makeStyles(styles);
 
 const fetchImages = async params => {
-  const url = `${IMAGES_API_URL}?keyword=${params.query}&page=1&fields=${params.fields}`;
-
-  const resp = await fetch(CORS_PROXY_URL + url);
+  const resp = await fetch(CORS_PROXY_URL + IMAGES_API_URL, {
+    method: "POST",
+    body: JSON.stringify(params)
+  });
   const images = await resp.json();
 
   console.log("images:", images);
@@ -34,8 +35,7 @@ const useFetchImages = () => {
 
   const fetchHandler = async () => {
     const params = {
-      query: searchKey,
-      fields: "_id,images"
+      keyword: searchKey
     };
 
     setIsFetching(true);

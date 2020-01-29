@@ -3,6 +3,7 @@ import {
   SET_SEARCH_KEY,
   ADD_ARTICLES,
   CLEAR_ARTICLES,
+  SET_ALL_TAGS,
   SET_ARTICLE_TAGS,
   SET_CATEGORY_TAGS,
   SET_IMAGES,
@@ -23,6 +24,10 @@ export const setSearchKey = searchKey => {
 
 export const clearArticles = () => {
   return { type: CLEAR_ARTICLES, payload: "" };
+};
+
+export const setAllTags = payload => {
+  return { type: SET_ALL_TAGS, payload };
 };
 
 export const setArticleTags = tags => {

@@ -2,10 +2,8 @@ import React from "react";
 import Slider from "react-slick";
 import { makeStyles } from "@material-ui/core";
 
-import Button from "components/CustomButtons/Button";
+import Button from "components/CustomButtons/Button.js";
 import styles from "assets/jss/components/tagsStyle.js";
-
-import { CORS_PROXY_URL, TAGS_API_URL, PHOTO_STATIC_URL } from "utils/Consts";
 
 const useStyles = makeStyles(styles);
 
@@ -88,26 +86,6 @@ const Tags = props => {
       <Slider {...settings}>{buttons}</Slider>
     </div>
   );
-};
-
-export const fetchTags = async () => {
-  const resp = await fetch(CORS_PROXY_URL + TAGS_API_URL);
-  const tags = await resp.json();
-
-  tags.listtags = tags.listtags || [];
-  tags.listtags = tags.listtags.map(item => {
-    if (item.tag && item.tag.logo) item.logo = PHOTO_STATIC_URL + item.tag.logo;
-    else {
-      let find = item.list_tags.find(i => i.logo);
-      if (find) {
-        item.logo = PHOTO_STATIC_URL + find.logo;
-      }
-    }
-    item.selected = false;
-    return item;
-  });
-
-  return tags.listtags.slice(0, 20);
 };
 
 export default Tags;
