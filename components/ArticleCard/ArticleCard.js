@@ -13,30 +13,51 @@ const getResizedImageUrl = props => {
   return resizedPhotoUrl;
 };
 
-const ArticleCard = ({ index, margin, photo }) => {
+const ArticleCard = ({ index, photo }) => {
   const params = {
     url: photo.src,
     width: photo.width,
     height: photo.height * 0.8
   };
 
-  let resizedUrl = photo.src;
-  if (photo.src && photo.src.startsWith("https")) {
-    resizedUrl = getResizedImageUrl(params);
-  }
+  let resizedUrl = photo.src && getResizedImageUrl(params);
 
-  return !photo.state ? (
-    <div
-      key={index}
-      style={{ margin, height: photo.height, width: photo.width }}
-    >
-      <div className="mask">
-        <img src={resizedUrl} width={params.width} height={params.height} />
-        <div className="article-title">{photo.photo.title}</div>
+  return (
+    <div key={index} className="card">
+      <div className="mask" style={{ width: `${params.width}px` }}>
+        {!photo.state && resizedUrl ? (
+          <img src={resizedUrl} width={params.width} height={params.height} />
+        ) : (
+          <Skeleton
+            variant="rect"
+            width={params.width}
+            height={params.height}
+          />
+        )}
+        {!photo.state && photo.photo.title ? (
+          <div className="article-title">{photo.photo.title}</div>
+        ) : (
+          <div>
+            <Skeleton
+              variant="rect"
+              width={"100%"}
+              height={"10px"}
+              style={{ marginTop: "5px", borderRadius: "3px" }}
+            />
+            <Skeleton
+              variant="rect"
+              width={"80%"}
+              height={"10px"}
+              style={{ marginTop: "5px", borderRadius: "3px" }}
+            />
+          </div>
+        )}
       </div>
       <style jsx>{`
+        .card {
+          margin: 5px 0 0 5px;
+        }
         .mask {
-          width: 100%;
           height: 100%;
         }
         .mask:hover {
@@ -45,33 +66,13 @@ const ArticleCard = ({ index, margin, photo }) => {
         .article-title {
           font-weight: 700;
           color: #000000;
+          display: -webkit-box;
           padding: 5px;
+          line-height: 1.2;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       `}</style>
-    </div>
-  ) : (
-    <div
-      key={`loading-${index}`}
-      style={{ margin, height: photo.height, width: photo.width }}
-    >
-      <Skeleton
-        variant="rect"
-        width={"100%"}
-        height={"80%"}
-        style={{ margin: "5px 0 0 5px" }}
-      />
-      <Skeleton
-        variant="rect"
-        width={"100%"}
-        height={"5%"}
-        style={{ margin: "5px 0 0 5px", borderRadius: "3px" }}
-      />
-      <Skeleton
-        variant="rect"
-        width={"80%"}
-        height={"5%"}
-        style={{ margin: "5px 0 0 5px", borderRadius: "3px" }}
-      />
     </div>
   );
 };

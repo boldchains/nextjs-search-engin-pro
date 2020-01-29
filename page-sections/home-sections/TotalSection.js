@@ -97,7 +97,7 @@ const TotalSection = () => {
   const imageData = articles.data.map((item, index) => {
     return {
       key: (articles.page * 20 + index).toString(),
-      src: item.image.url ? item.image.url : process.env.host + failedImage,
+      src: item.image.url,
       state: articles.isFetching,
       photo: item,
       width: 4,
@@ -115,6 +115,7 @@ const TotalSection = () => {
               photos={imageData}
               columns={200}
               renderImage={ArticleCard}
+              margin={3}
             />
           )}
         </div>
