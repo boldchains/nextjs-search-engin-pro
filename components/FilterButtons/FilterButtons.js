@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import Slider from "react-slick";
@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core";
 
 import Button from "components/CustomButtons/Button";
 
-import { setTags, setIsFetching } from "services/reducers/tags/actions";
+import { setTags } from "services/reducers/search/actions";
 
 import styles from "assets/jss/components/filterButtonsStyle.js";
 import { CORS_PROXY_URL, TAGS_API_URL, PHOTO_STATIC_URL } from "utils/Consts";
@@ -33,8 +33,8 @@ const fetchTags = async () => {
 };
 
 const useFetchTags = () => {
-  const tags = useSelector(state => state.tags.data);
-  const isFetching = useSelector(state => state.tags.isFetching);
+  const tags = useSelector(state => state.searchStates.tags);
+  const [isFetching, setIsFetching] = useState(false);
 
   const dispatch = useDispatch();
 

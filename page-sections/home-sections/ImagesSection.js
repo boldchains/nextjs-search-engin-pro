@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { makeStyles } from "@material-ui/core";
@@ -7,7 +7,7 @@ import Slider from "react-slick";
 import Card from "components/Card/Card.js";
 import ImageCard from "components/ImageCard/ImageCard.js";
 
-import { setImages, setIsFetching } from "services/reducers/images/actions";
+import { setImages } from "services/reducers/search/actions.js";
 
 import styles from "assets/jss/page-sections/home-sections/imagesSectionStyle.js";
 import { CORS_PROXY_URL, IMAGES_API_URL } from "utils/Consts.js";
@@ -24,9 +24,9 @@ const fetchImages = async params => {
 };
 
 const useFetchImages = () => {
-  const images = useSelector(state => state.images.data);
-  const searchKey = useSelector(state => state.images.searchKey);
-  const isFetching = useSelector(state => state.images.isFetching);
+  const images = useSelector(state => state.searchStates.images);
+  const searchKey = useSelector(state => state.searchStates.searchKey);
+  const [isFetching, setIsFetching] = useState(false);
 
   const dispatch = useDispatch();
 

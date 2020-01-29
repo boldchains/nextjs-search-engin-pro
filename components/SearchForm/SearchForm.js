@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  setSearchKey,
-  clearArticles
-} from "services/reducers/articles/actions";
+import { setSearchKey, clearArticles } from "services/reducers/search/actions";
 
 import { makeStyles } from "@material-ui/core/styles";
 import styles from "assets/jss/components/searchFormStyle.js";

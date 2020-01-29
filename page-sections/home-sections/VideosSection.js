@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { makeStyles } from "@material-ui/core";
@@ -7,14 +7,15 @@ import Card from "components/Card/Card.js";
 import VideoCard from "components/VideoCard/VideoCard.js";
 
 // redux actions
-import { setVideos, setIsFetching } from "services/reducers/videos/actions";
+import { setVideos } from "services/reducers/search/actions.js";
 
 import styles from "assets/jss/page-sections/home-sections/videosSectionStyle.js";
+import { VIDEOS_API_URL } from "utils/Consts.js";
 
 const useStyles = makeStyles(styles);
 
 async function fetchVideos(params) {
-  const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${params.query}&maxResults=${params.count}&key=${process.env.apiKey}`;
+  const url = `${VIDEOS_API_URL}?part=snippet&q=${params.query}&maxResults=${params.count}&key=${process.env.apiKey}`;
 
   const response = await fetch(url);
   const jsonResponse = await response.json();
@@ -22,9 +23,9 @@ async function fetchVideos(params) {
 }
 
 function useFetchVideos() {
-  const videos = useSelector(state => state.videos.data);
-  const searchKey = useSelector(state => state.videos.searchKey);
-  const isFetching = useSelector(state => state.videos.isFetching);
+  const videos = useSelector(state => state.searchStates.videos);
+  const searchKey = useSelector(state => state.searchStates.searchKey);
+  const [isFetching, setIsFetching] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -57,6 +58,7 @@ const VideosSection = () => {
 
   const videoCards =
     videos.items &&
+    videos.items.length !== 0 &&
     videos.items.map((video, index) => (
       <VideoCard info={video} key={index} isLoaded={!videos.isLoading} />
     ));

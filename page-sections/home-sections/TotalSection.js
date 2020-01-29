@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addArticles } from "services/reducers/articles/actions";
+import { addArticles } from "services/reducers/search/actions.js";
 
 import { makeStyles } from "@material-ui/core";
 import Card from "components/Card/Card.js";
@@ -26,13 +26,13 @@ async function fetchArticles(params) {
 }
 
 function useFetchArticles() {
-  const articles = useSelector(state => state.articles.data);
-  const articlesPage = useSelector(state => state.articles.page);
-  const searchKey = useSelector(state => state.articles.searchKey);
+  const articles = useSelector(state => state.searchStates.articles);
+  const articlesPage = useSelector(state => state.searchStates.page);
+  const searchKey = useSelector(state => state.searchStates.searchKey);
   const dispatch = useDispatch();
 
   const [isFetching, setIsFetching] = useState(true);
-  const lang = useSelector(state => state.articles.lang);
+  const lang = useSelector(state => state.searchStates.lang);
 
   async function fetchArticlesHandler() {
     setIsFetching(true);
@@ -43,7 +43,7 @@ function useFetchArticles() {
     });
     setIsFetching(false);
 
-    dispatch(addArticles(fetchedData));
+    fetchedData && dispatch(addArticles(fetchedData));
   }
 
   useEffect(() => {
