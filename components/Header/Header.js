@@ -63,7 +63,7 @@ export default function Header(props) {
   });
   const brandComponent = (
     <Link href="/" as="/">
-      <img className={classes.brand} src={brand}/>
+      <img className={classes.brand} src={brand} />
     </Link>
   );
   return (

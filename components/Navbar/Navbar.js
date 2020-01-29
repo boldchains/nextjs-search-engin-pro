@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -18,57 +18,51 @@ import styles from "assets/jss/components/navbarStyle.js";
 const useStyles = makeStyles(styles);
 
 export default function Navbar() {
-    const classes = useStyles();
-    return (
-        <nav className={classes.navbar}>
-            <Header
-                brand={logoImage}
-                color="dark"
-                leftLinks={
-                    <SearchForm/>
+  const classes = useStyles();
+  return (
+    <nav className={classes.navbar}>
+      <Header
+        brand={logoImage}
+        color="dark"
+        leftLinks={<SearchForm />}
+        rightLinks={
+          <List className={classes.list}>
+            <ListItem className={classes.listItem}>
+              <Button
+                justIcon
+                round
+                href="#pablo"
+                className={classes.notificationNavLink}
+                onClick={e => e.preventDefault()}
+                color="rose"
+              >
+                <Email className={classes.icons} />
+              </Button>
+            </ListItem>
+            <ListItem className={classes.listItem}>
+              <CustomDropdown
+                left
+                caret={false}
+                hoverColor="black"
+                dropdownHeader="Dropdown Header"
+                buttonText={
+                  <img
+                    src={profileImage}
+                    className={classes.img}
+                    alt="profile"
+                  />
                 }
-                rightLinks={
-                <List className={classes.list}>
-                    <ListItem className={classes.listItem}>
-                        <Button
-                            justIcon
-                            round
-                            href="#pablo"
-                            className={classes.notificationNavLink}
-                            onClick={e => e.preventDefault()}
-                            color="rose"
-                        >
-                            <Email className={classes.icons} />
-                        </Button>
-                    </ListItem>
-                    <ListItem className={classes.listItem}>
-                        <CustomDropdown
-                            left
-                            caret={false}
-                            hoverColor="black"
-                            dropdownHeader="Dropdown Header"
-                            buttonText={
-                                <img
-                                    src={profileImage}
-                                    className={classes.img}
-                                    alt="profile"
-                                />
-                            }
-                            buttonProps={{
-                                className:
-                                classes.navLink + " " + classes.imageDropdownButton,
-                                color: "transparent"
-                            }}
-                            dropdownList={[
-                                "Me",
-                                "Settings and other stuff",
-                                "Sign out"
-                            ]}
-                        />
-                    </ListItem>
-                </List>
-                }
-            />
-        </nav>
-    )
-};
+                buttonProps={{
+                  className:
+                    classes.navLink + " " + classes.imageDropdownButton,
+                  color: "transparent"
+                }}
+                dropdownList={["Me", "Settings and other stuff", "Sign out"]}
+              />
+            </ListItem>
+          </List>
+        }
+      />
+    </nav>
+  );
+}
