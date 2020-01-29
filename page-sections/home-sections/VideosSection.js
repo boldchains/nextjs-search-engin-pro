@@ -58,7 +58,7 @@ const VideosSection = () => {
   const videoCards =
     videos.items &&
     videos.items.map((video, index) => (
-      <VideoCard info={video} key={index} isLoaded={videos.isLoading} />
+      <VideoCard info={video} key={index} isLoaded={!videos.isLoading} />
     ));
 
   const settings = {
