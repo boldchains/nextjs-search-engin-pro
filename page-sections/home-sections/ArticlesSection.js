@@ -105,12 +105,23 @@ const useFetchTags = () => {
     dispatch(setArticleTags(fetchedData));
   };
 
+  const onSelect = index => {
+    const clonedTags = [...tags];
+    clonedTags &&
+      clonedTags.map((item, idx) => {
+        item.selected = idx === index;
+      });
+
+    dispatch(setArticleTags(clonedTags));
+  };
+
   useEffect(() => {
     fetchHandler();
   }, []);
 
   return {
     data: tags,
+    onSelect: onSelect,
     isFetching: isFetching
   };
 };

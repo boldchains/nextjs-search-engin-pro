@@ -30,11 +30,8 @@ const Tags = props => {
   const classes = useStyles();
   const tags = props.tags.data;
 
-  const onSelectTag = (e, idx) => {
-    tags.map((item, index) => {
-      item.selected = idx === index;
-      return item;
-    });
+  const onSelectTag = (e, index) => {
+    props.tags.onSelect(index);
   };
 
   const buttons =
