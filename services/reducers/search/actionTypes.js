@@ -5,4 +5,5 @@ export const SET_SEARCH_KEY = "SET_SEARCH_KEY";
 export const SET_IMAGES = "SET_IMAGES";
 export const SET_ARTICLE_TAGS = "SET_ARTICLE_TAGS";
 export const SET_CATEGORY_TAGS = "SET_CATEGORY_TAGS";
+export const SET_ALL_TAGS = "SET_ALL_TAGS";
 export const SET_VIDEOS = "SET_VIDEOS";

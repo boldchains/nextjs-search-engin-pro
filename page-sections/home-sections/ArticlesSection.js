@@ -8,7 +8,7 @@ import {
 import { makeStyles } from "@material-ui/core";
 import Card from "components/Card/Card.js";
 import ArticleCard from "components/ArticleCard/ArticleCard.js";
-import Tags, { fetchTags } from "components/Tags/Tags.js";
+import Tags from "components/Tags/Tags.js";
 
 import Gallery from "react-photo-gallery";
 import styles from "assets/jss/page-sections/home-sections/articlesSectionStyle.js";
@@ -91,18 +91,15 @@ function useShowGallery(initialState) {
 }
 
 const useFetchTags = () => {
+  const allTags = useSelector(state => state.searchStates.allTags);
   const tags = useSelector(state => state.searchStates.articleTags);
   const searchKey = useSelector(state => state.searchStates.searchKey);
-  const [isFetching, setIsFetching] = useState(false);
 
   const dispatch = useDispatch();
 
-  const fetchHandler = async () => {
-    setIsFetching(false);
-    const fetchedData = await fetchTags();
-    setIsFetching(true);
-
-    dispatch(setArticleTags(fetchedData));
+  const searchHandler = () => {
+    const tagList = allTags ? allTags.slice(0, 20) : [];
+    dispatch(setArticleTags(tagList));
   };
 
   const onSelect = index => {
@@ -116,13 +113,12 @@ const useFetchTags = () => {
   };
 
   useEffect(() => {
-    searchKey && searchKey !== "" && fetchHandler();
+    searchKey && searchKey !== "" && searchHandler();
   }, [searchKey]);
 
   return {
     data: tags,
-    onSelect: onSelect,
-    isFetching: isFetching
+    onSelect: onSelect
   };
 };
 
