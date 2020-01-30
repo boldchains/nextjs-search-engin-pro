@@ -6,7 +6,10 @@ import { makeStyles } from "@material-ui/core";
 import Tags from "components/Tags/Tags.js";
 import ImagesSection from "./ImagesSection.js";
 import VideosSection from "./VideosSection.js";
-import { setCategoryTags } from "services/reducers/search/actions.js";
+import {
+  setCategoryTags,
+  setCategoryTag
+} from "services/reducers/search/actions.js";
 
 import styles from "assets/jss/page-sections/home-sections/categoriesSectionStyle.js";
 
@@ -20,7 +23,10 @@ const useFetchTags = () => {
   const dispatch = useDispatch();
 
   const searchHandler = () => {
-    const tagList = allTags ? allTags.slice(0, 20) : [];
+    const filteredList = allTags.filter(function(item) {
+      return item._id.toLowerCase().indexOf(searchKey) >= 0;
+    });
+    const tagList = allTags ? filteredList : [];
     dispatch(setCategoryTags(tagList));
   };
 
@@ -34,6 +40,11 @@ const useFetchTags = () => {
       clonedTags.map((item, idx) => {
         item.selected = idx === index;
       });
+
+    const selectedTag = clonedTags[index];
+    if (selectedTag && selectedTag._id !== "All") {
+      dispatch(setCategoryTag(selectedTag._id));
+    }
 
     clonedTags.shift();
     dispatch(setCategoryTags(clonedTags));

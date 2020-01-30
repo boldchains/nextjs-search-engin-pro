@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   addArticles,
-  setArticleTags
+  setArticleTags,
+  setArticleTag
 } from "services/reducers/search/actions.js";
 
 import { makeStyles } from "@material-ui/core";
@@ -98,7 +99,10 @@ const useFetchTags = () => {
   const dispatch = useDispatch();
 
   const searchHandler = () => {
-    const tagList = allTags ? allTags.slice(0, 20) : [];
+    const filteredList = allTags.filter(function(item) {
+      return item._id.toLowerCase().indexOf(searchKey) >= 0;
+    });
+    const tagList = allTags ? filteredList : [];
     dispatch(setArticleTags(tagList));
   };
 
@@ -108,6 +112,12 @@ const useFetchTags = () => {
       clonedTags.map((item, idx) => {
         item.selected = idx === index;
       });
+
+    const selectedTag = clonedTags[index];
+    if (selectedTag && selectedTag._id !== "All") {
+      dispatch(setArticleTag(selectedTag._id));
+    }
+
     clonedTags.shift();
     dispatch(setArticleTags(clonedTags));
   };

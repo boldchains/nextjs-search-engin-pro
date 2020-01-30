@@ -25,13 +25,14 @@ async function fetchVideos(params) {
 function useFetchVideos() {
   const videos = useSelector(state => state.searchStates.videos);
   const searchKey = useSelector(state => state.searchStates.searchKey);
+  const selectedCTag = useSelector(state => state.searchStates.selectedCTag);
   const [isFetching, setIsFetching] = useState(false);
 
   const dispatch = useDispatch();
 
   async function fetchVideosHandler() {
     const params = {
-      query: searchKey,
+      query: selectedCTag !== "" ? selectedCTag : searchKey,
       count: 20
     };
 
@@ -44,7 +45,7 @@ function useFetchVideos() {
 
   useEffect(() => {
     fetchVideosHandler();
-  }, [searchKey]);
+  }, [searchKey, selectedCTag]);
 
   return {
     items: videos,

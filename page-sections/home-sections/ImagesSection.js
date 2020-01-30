@@ -10,48 +10,36 @@ import ImageCard from "components/ImageCard/ImageCard.js";
 import { setImages } from "services/reducers/search/actions.js";
 
 import styles from "assets/jss/page-sections/home-sections/imagesSectionStyle.js";
-import { CORS_PROXY_URL, IMAGES_API_URL } from "utils/Consts.js";
 
 const useStyles = makeStyles(styles);
 
-const fetchImages = async params => {
-  const resp = await fetch(CORS_PROXY_URL + IMAGES_API_URL, {
-    method: "POST",
-    body: JSON.stringify(params)
-  });
-  const images = await resp.json();
-
-  console.log("images:", images);
-
-  return images;
-};
-
 const useFetchImages = () => {
+  const categoryTags = useSelector(state => state.searchStates.categoryTags);
   const images = useSelector(state => state.searchStates.images);
   const searchKey = useSelector(state => state.searchStates.searchKey);
-  const [isFetching, setIsFetching] = useState(false);
+  const selectedCTag = useSelector(state => state.searchStates.selectedCTag);
 
   const dispatch = useDispatch();
 
-  const fetchHandler = async () => {
-    const params = {
-      keyword: searchKey
-    };
+  const searchHandler = () => {
+    const keyword =
+      selectedCTag && selectedCTag !== "" ? selectedCTag : searchKey;
+    const findTags = categoryTags.find(item => {
+      return item._id.toLowerCase().indexOf(keyword.toLowerCase()) >= 0;
+    });
 
-    setIsFetching(true);
-    const fetchedData = await fetchImages(params);
-    setIsFetching(false);
-
-    dispatch(setImages(fetchedData));
+    if (findTags && findTags.list_tags) {
+      const tagImages = findTags.list_tags.slice(0, 20);
+      dispatch(setImages(tagImages));
+    }
   };
 
   useEffect(() => {
-    fetchHandler();
-  }, [searchKey]);
+    searchHandler();
+  }, [searchKey, selectedCTag]);
 
   return {
-    data: images,
-    isFetching: isFetching
+    data: images
   };
 };
 
