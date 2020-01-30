@@ -93,6 +93,7 @@ function useShowGallery(initialState) {
 
 const useFetchTags = () => {
   const allTags = useSelector(state => state.searchStates.allTags);
+  const selectedATag = useSelector(state => state.searchStates.selectedATag);
   const tags = useSelector(state => state.searchStates.articleTags);
   const searchKey = useSelector(state => state.searchStates.searchKey);
 
@@ -124,7 +125,7 @@ const useFetchTags = () => {
 
   useEffect(() => {
     searchKey && searchKey !== "" && searchHandler();
-  }, [searchKey]);
+  }, [searchKey, selectedATag]);
 
   return {
     data: tags,

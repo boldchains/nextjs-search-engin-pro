@@ -33,7 +33,6 @@ export default function Navbar() {
                 left
                 caret={false}
                 hoverColor="black"
-                dropdownHeader="Topics"
                 buttonText={
                   <img src={topicsIcon} className={classes.img} alt="topics" />
                 }
@@ -50,24 +49,6 @@ export default function Navbar() {
                 left
                 caret={false}
                 hoverColor="black"
-                dropdownHeader="Language"
-                buttonText={
-                  <img src={languages} className={classes.img} alt="language" />
-                }
-                buttonProps={{
-                  className:
-                    classes.navLink + " " + classes.imageDropdownButton,
-                  color: "transparent"
-                }}
-                dropdownList={languages}
-              />
-            </ListItem>
-            <ListItem className={classes.listItem}>
-              <CustomDropdown
-                left
-                caret={false}
-                hoverColor="black"
-                dropdownHeader="Auth"
                 buttonText={
                   <img src={userIcon} className={classes.img} alt="topics" />
                 }
@@ -84,7 +65,6 @@ export default function Navbar() {
                 left
                 caret={false}
                 hoverColor="black"
-                dropdownHeader="Menu"
                 buttonText={
                   <img src={menuIcon} className={classes.img} alt="menu" />
                 }

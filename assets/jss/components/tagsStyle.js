@@ -18,7 +18,7 @@ const tagsStyle = {
   },
   filterButtonsLayout: {
     position: "relative",
-    margin: "10px 0px",
+    marginTop: "5px",
     zIndex: 1
   },
   nextArrow: {

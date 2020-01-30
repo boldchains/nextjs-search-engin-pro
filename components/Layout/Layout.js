@@ -6,7 +6,7 @@ import Navbar from "../Navbar/Navbar";
 class Layout extends Component {
   render() {
     return (
-      <div>
+      <div style={{ marginTop: "90px" }}>
         <Head>
           <title>Search Vavel</title>
         </Head>

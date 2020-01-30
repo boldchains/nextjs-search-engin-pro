@@ -37,7 +37,7 @@ function useFetchVideos() {
     };
 
     setIsFetching(true);
-    const fetchedData = await fetchVideos(params);
+    const fetchedData = []; //await fetchVideos(params);
     setIsFetching(false);
 
     dispatch(setVideos(fetchedData));

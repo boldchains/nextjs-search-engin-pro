@@ -36,118 +36,118 @@ import mini_th from "./mini_th.png";
 import mini_tr from "./mini_tr.png";
 import mini_zh from "./mini_zh.png";
 
-// const languages = [
-//   {
-//     icon: ar,
-//     iconMini: mini_ar,
-//     language: "Arabic"
-//   },
-//   {
-//     icon: ca,
-//     iconMini: mini_ca,
-//     language: "Català"
-//   },
-//   {
-//     icon: nl,
-//     iconMini: mini_nl,
-//     language: "Dutch"
-//   },
-//   {
-//     icon: es,
-//     iconMini: mini_es,
-//     language: "Español"
-//   },
-//   {
-//     icon: en,
-//     iconMini: mini_en,
-//     language: "English"
-//   },
-//   {
-//     icon: fr,
-//     iconMini: mini_fr,
-//     language: "French"
-//   },
-//   {
-//     icon: de,
-//     iconMini: mini_de,
-//     language: "German"
-//   },
-//   {
-//     icon: el,
-//     iconMini: mini_el,
-//     language: "Greek"
-//   },
-//   {
-//     icon: he,
-//     iconMini: mini_he,
-//     language: "Hebrew"
-//   },
-//   {
-//     icon: id,
-//     iconMini: mini_id,
-//     language: "Indonesian"
-//   },
-//   {
-//     icon: it,
-//     iconMini: mini_it,
-//     language: "Italiano"
-//   },
-//   {
-//     icon: ja,
-//     iconMini: mini_ja,
-//     language: "Japan"
-//   },
-//   {
-//     icon: pl,
-//     iconMini: mini_pl,
-//     language: "Polish"
-//   },
-//   {
-//     icon: pt,
-//     iconMini: mini_pt,
-//     language: "Portuguese"
-//   },
-//   {
-//     icon: ru,
-//     iconMini: mini_ru,
-//     language: "Russian"
-//   },
-//   {
-//     icon: th,
-//     iconMini: mini_th,
-//     language: "Thai"
-//   },
-//   {
-//     icon: tr,
-//     iconMini: mini_tr,
-//     language: "Turkish"
-//   },
-//   {
-//     icon: zh,
-//     iconMini: mini_zh,
-//     language: "Chinese"
-//   }
-// ];
-
 const languages = [
-  "Español",
-  "Arabic",
-  "Català",
-  "Chinese",
-  "Dutch",
-  "English",
-  "French",
-  "German",
-  "Greek",
-  "Hebrew",
-  "Indonesian",
-  "Italiano",
-  "Japan",
-  "Polish",
-  "Portuguese",
-  "Russian",
-  "Thai",
-  "Turkis"
+  {
+    image: ar,
+    icon: mini_ar,
+    text: "Arabic"
+  },
+  {
+    image: ca,
+    icon: mini_ca,
+    text: "Català"
+  },
+  {
+    image: nl,
+    icon: mini_nl,
+    text: "Dutch"
+  },
+  {
+    image: es,
+    icon: mini_es,
+    text: "Español"
+  },
+  {
+    image: en,
+    icon: mini_en,
+    text: "English"
+  },
+  {
+    image: fr,
+    icon: mini_fr,
+    text: "French"
+  },
+  {
+    image: de,
+    icon: mini_de,
+    text: "German"
+  },
+  {
+    image: el,
+    icon: mini_el,
+    text: "Greek"
+  },
+  {
+    image: he,
+    icon: mini_he,
+    text: "Hebrew"
+  },
+  {
+    image: id,
+    icon: mini_id,
+    text: "Indonesian"
+  },
+  {
+    image: it,
+    icon: mini_it,
+    text: "Italiano"
+  },
+  {
+    image: ja,
+    icon: mini_ja,
+    text: "Japan"
+  },
+  {
+    image: pl,
+    icon: mini_pl,
+    text: "Polish"
+  },
+  {
+    image: pt,
+    icon: mini_pt,
+    text: "Portuguese"
+  },
+  {
+    image: ru,
+    icon: mini_ru,
+    text: "Russian"
+  },
+  {
+    image: th,
+    icon: mini_th,
+    text: "Thai"
+  },
+  {
+    image: tr,
+    icon: mini_tr,
+    text: "Turkish"
+  },
+  {
+    image: zh,
+    icon: mini_zh,
+    text: "Chinese"
+  }
 ];
+
+// const languages = [
+//   "Español",
+//   "Arabic",
+//   "Català",
+//   "Chinese",
+//   "Dutch",
+//   "English",
+//   "French",
+//   "German",
+//   "Greek",
+//   "Hebrew",
+//   "Indonesian",
+//   "Italiano",
+//   "Japan",
+//   "Polish",
+//   "Portuguese",
+//   "Russian",
+//   "Thai",
+//   "Turkis"
+// ];
 
 export default languages;

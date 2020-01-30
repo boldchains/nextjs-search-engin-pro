@@ -44,6 +44,7 @@ export default function SearchForm() {
           type="text"
           className={`form-control ${classes.formControl}`}
           {...searchKey}
+          value={searchKey.value}
           placeholder="Search what you want"
         />
         <div className="input-group-append">

@@ -5,9 +5,12 @@ import classNames from "classnames";
 import PropTypes from "prop-types";
 
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Paper from "@material-ui/core/Paper";
 import Grow from "@material-ui/core/Grow";
@@ -69,6 +72,16 @@ export default function CustomDropdown(props) {
     [classes.noLiPadding]: noLiPadding,
     [classes.dropdownItemRTL]: rtlActive
   });
+  const StyledMenuItem = withStyles(theme => ({
+    root: {
+      "&:focus": {
+        backgroundColor: theme.palette.primary.main,
+        "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
+          color: theme.palette.common.white
+        }
+      }
+    }
+  }))(MenuItem);
   let icon = null;
   switch (typeof buttonIcon) {
     case "object":
@@ -147,15 +160,27 @@ export default function CustomDropdown(props) {
                         />
                       );
                     }
-                    return (
-                      <MenuItem
-                        key={key}
-                        onClick={() => handleClose(prop)}
-                        className={dropdownItem}
-                      >
-                        {prop}
-                      </MenuItem>
-                    );
+                    switch (typeof key) {
+                      case "object":
+                        return (
+                          <StyledMenuItem>
+                            <ListItemIcon>
+                              <img src={key.icon} />
+                            </ListItemIcon>
+                            <ListItemText primary={key.text} />
+                          </StyledMenuItem>
+                        );
+                      default:
+                        return (
+                          <MenuItem
+                            key={key}
+                            onClick={() => handleClose(prop)}
+                            className={dropdownItem}
+                          >
+                            {prop}
+                          </MenuItem>
+                        );
+                    }
                   })}
                 </MenuList>
               </ClickAwayListener>
