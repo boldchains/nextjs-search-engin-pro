@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import fetch from "isomorphic-unfetch";
 import {
   addArticles,
   setArticleTags,
@@ -101,7 +102,7 @@ const useFetchTags = () => {
 
   const searchHandler = () => {
     const filteredList = allTags.filter(function(item) {
-      return item._id.toLowerCase().indexOf(searchKey) >= 0;
+      return item._id.toLowerCase().indexOf(searchKey.toLowerCase()) >= 0;
     });
     const tagList = allTags ? filteredList : [];
     dispatch(setArticleTags(tagList));
@@ -169,5 +170,7 @@ const TotalSection = () => {
     </Card>
   );
 };
+
+TotalSection.getInitialProps = async function(context) {};
 
 export default TotalSection;
