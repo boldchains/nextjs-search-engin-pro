@@ -9,11 +9,6 @@ import Header from "components/Header/Header.js";
 import CustomDropdown from "components/CustomDropdown/CustomDropdown.js";
 import SearchForm from "components/SearchForm/SearchForm.js";
 
-import languages from "assets/img/lang";
-import topicsIcon from "assets/img/menu/trending-icon.png";
-import userIcon from "assets/img/menu/user-icon.png";
-import menuIcon from "assets/img/menu/menu-icon.png";
-import logoImage from "assets/img/logo.png";
 import styles from "assets/jss/components/navbarStyle.js";
 
 const useStyles = makeStyles(styles);
@@ -23,7 +18,7 @@ export default function Navbar() {
   return (
     <nav className={classes.navbar}>
       <Header
-        brand={logoImage}
+        brand="/img/logo.png"
         color="dark"
         leftLinks={<SearchForm />}
         rightLinks={
@@ -34,7 +29,11 @@ export default function Navbar() {
                 caret={false}
                 hoverColor="black"
                 buttonText={
-                  <img src={topicsIcon} className={classes.img} alt="topics" />
+                  <img
+                    src="/img/menu/trending-icon.png"
+                    className={classes.img}
+                    alt="topics"
+                  />
                 }
                 buttonProps={{
                   className:
@@ -50,7 +49,11 @@ export default function Navbar() {
                 caret={false}
                 hoverColor="black"
                 buttonText={
-                  <img src={userIcon} className={classes.img} alt="topics" />
+                  <img
+                    src="/img/menu/user-icon.png"
+                    className={classes.img}
+                    alt="topics"
+                  />
                 }
                 buttonProps={{
                   className:
@@ -66,7 +69,11 @@ export default function Navbar() {
                 caret={false}
                 hoverColor="black"
                 buttonText={
-                  <img src={menuIcon} className={classes.img} alt="menu" />
+                  <img
+                    src="/img/menu/menu-icon.png"
+                    className={classes.img}
+                    alt="menu"
+                  />
                 }
                 buttonProps={{
                   className:
