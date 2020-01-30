@@ -6,6 +6,8 @@ import {
   SET_ALL_TAGS,
   SET_ARTICLE_TAGS,
   SET_CATEGORY_TAGS,
+  SET_CATEGORY_TAG,
+  SET_ARTICLE_TAG,
   SET_IMAGES,
   SET_VIDEOS
 } from "./actionTypes";
@@ -36,6 +38,14 @@ export const setArticleTags = tags => {
 
 export const setCategoryTags = tags => {
   return { type: SET_CATEGORY_TAGS, payload: tags };
+};
+
+export const setArticleTag = tag => {
+  return { type: SET_ARTICLE_TAG, payload: tag };
+};
+
+export const setCategoryTag = tag => {
+  return { type: SET_CATEGORY_TAG, payload: tag };
 };
 
 export const setImages = images => {

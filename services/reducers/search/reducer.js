@@ -7,7 +7,9 @@ import {
   SET_IMAGES,
   SET_ALL_TAGS,
   SET_CATEGORY_TAGS,
-  SET_ARTICLE_TAGS
+  SET_ARTICLE_TAGS,
+  SET_CATEGORY_TAG,
+  SET_ARTICLE_TAG
 } from "./actionTypes";
 
 const defaultTag = { _id: "All", selected: true };
@@ -21,6 +23,8 @@ const initialState = {
   allTags: [],
   articleTags: [defaultTag],
   categoryTags: [defaultTag],
+  selectedCTag: "",
+  selectedATag: "",
   page: 1
 };
 
@@ -30,6 +34,16 @@ export default function(state = initialState, { type, payload }) {
       return {
         ...state,
         lang: payload
+      };
+    case SET_ARTICLE_TAG:
+      return {
+        ...state,
+        selectedATag: payload
+      };
+    case SET_CATEGORY_TAG:
+      return {
+        ...state,
+        selectedCTag: payload
       };
     case SET_ALL_TAGS:
       return {
