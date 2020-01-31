@@ -50,13 +50,13 @@ const ImagesSection = () => {
   const maxHeight = 120;
   const imageCards =
     images.data &&
-    images.data.map(image => {
+    images.data.map((image, index) => {
       if (image.height != maxHeight) {
         const rate = maxHeight / image.height;
         image.width = image.width * rate;
         image.height = maxHeight;
       }
-      return <ImageCard info={image} key={image.id} />;
+      return <ImageCard info={image} key={index} />;
     });
 
   const settings = {
