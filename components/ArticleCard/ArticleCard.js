@@ -25,7 +25,7 @@ const ArticleCard = ({ index, photo }) => {
   return (
     <div key={index} className="card">
       <div className="mask" style={{ width: `${params.width}px` }}>
-        {!photo.state && resizedUrl ? (
+        {resizedUrl ? (
           <img src={resizedUrl} width={params.width} height={params.height} />
         ) : (
           <Skeleton
@@ -34,7 +34,7 @@ const ArticleCard = ({ index, photo }) => {
             height={params.height}
           />
         )}
-        {!photo.state && photo.photo.title ? (
+        {photo.photo && photo.photo.title ? (
           <div className="article-title">{photo.photo.title}</div>
         ) : (
           <div>

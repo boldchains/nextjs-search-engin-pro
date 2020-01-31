@@ -41,6 +41,7 @@ function useFetchArticles() {
 
   async function fetchArticlesHandler() {
     setIsFetching(true);
+
     const fetchedData = await fetchArticles({
       page: articlesPage,
       query: searchKey,
@@ -141,11 +142,17 @@ const TotalSection = () => {
   const articles = useFetchArticles();
   const showGallery = useShowGallery(false);
 
-  const imageData = articles.data.map((item, index) => {
+  const fakeData = Array.from(new Array(20)).map(item => {
+    return {};
+  });
+  const renderableData = articles.isFetching
+    ? [...articles.data, ...fakeData]
+    : articles.data;
+
+  const imageData = renderableData.map((item, index) => {
     return {
       key: (articles.page * 20 + index).toString(),
-      src: item.image.url ? item.image.url : "",
-      state: articles.isFetching,
+      src: item.image && item.image.url ? item.image.url : "",
       photo: item,
       width: 4,
       height: 3
