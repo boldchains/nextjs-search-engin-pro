@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Router from "next/router";
 import { useDispatch } from "react-redux";
 import { setSearchKey, clearArticles } from "services/reducers/search/actions";
 
@@ -32,6 +33,21 @@ export default function SearchForm() {
 
     dispatch(setSearchKey(searchKey.value));
     dispatch(clearArticles());
+
+    const { pathname } = Router;
+    if (pathname == "/") {
+      Router.push(
+        "/",
+        {
+          pathname: "/",
+          query: {
+            ...Router.query,
+            q: searchKey.value
+          }
+        },
+        { shallow: true }
+      );
+    }
   }
 
   return (

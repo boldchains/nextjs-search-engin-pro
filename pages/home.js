@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 import { setAllTags } from "services/reducers/search/actions.js";
 import Layout from "components/Layout/Layout.js";
 import CategoriesSection from "page-sections/home-sections/CategoriesSection.js";
@@ -33,6 +34,7 @@ const fetchTags = async () => {
 
 const Home = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const fetchHandler = async () => {
     const fetchedData = await fetchTags();
@@ -41,7 +43,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchHandler();
-  }, []);
+  }, [router.query.q]);
 
   return (
     <Layout>
