@@ -20,10 +20,7 @@ import { CORS_PROXY_URL, ARTICLES_API_URL } from "utils/Consts.js";
 const useStyles = makeStyles(styles);
 
 async function fetchArticles(params) {
-  let url = `${ARTICLES_API_URL}?l=${params.lang}&page=${params.page}`;
-  if (params.query && params.query !== "") {
-    url = url + `&q=${params.query}`;
-  }
+  let url = `${ARTICLES_API_URL}?l=${params.lang}&page=${params.page}&q=${params.query}`;
 
   const response = await fetch(CORS_PROXY_URL + url);
   const jsonResponse = await response.json();
@@ -74,6 +71,10 @@ function useFetchArticles() {
 
   useEffect(() => {
     fetchArticlesHandler();
+    console.log(
+      "calling from articles section when change searchkey!",
+      searchKey
+    );
   }, [searchKey]);
 
   return {

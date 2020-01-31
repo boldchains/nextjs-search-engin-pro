@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useRouter } from "next/router";
-import { setAllTags } from "services/reducers/search/actions.js";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter, withRouter } from "next/router";
+import {
+  setAllTags,
+  setSearchKey,
+  clearArticles
+} from "services/reducers/search/actions.js";
+
 import Layout from "components/Layout/Layout.js";
 import CategoriesSection from "page-sections/home-sections/CategoriesSection.js";
 import ArticlesSection from "page-sections/home-sections/ArticlesSection.js";
@@ -35,6 +40,8 @@ const fetchTags = async () => {
 const Home = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const searchKey = useSelector(state => state.searchStates.searchKey);
+  const lang = useSelector(state => state.searchStates.lang);
 
   const fetchHandler = async () => {
     const fetchedData = await fetchTags();
@@ -42,6 +49,24 @@ const Home = () => {
   };
 
   useEffect(() => {
+    console.log(
+      "calling from home page when change router!",
+      router.query.q + " : " + searchKey
+    );
+    const query = router.query;
+    if (!query.l) {
+      router.push({
+        pathname: "/",
+        query: {
+          ...query,
+          l: lang
+        }
+      });
+    }
+
+    dispatch(setSearchKey(router.query.q));
+    dispatch(clearArticles());
+
     fetchHandler();
   }, [router.query.q]);
 
@@ -53,4 +78,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default withRouter(Home);

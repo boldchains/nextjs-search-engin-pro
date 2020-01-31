@@ -25,7 +25,9 @@ const useFetchImages = () => {
     const keyword =
       selectedCTag && selectedCTag !== "" ? selectedCTag : searchKey;
     const findTags = categoryTags.find(item => {
-      return item._id.toLowerCase().indexOf(keyword.toLowerCase()) >= 0;
+      return (
+        item._id.toLowerCase().indexOf(keyword && keyword.toLowerCase()) >= 0
+      );
     });
 
     if (findTags && findTags.list_tags) {
@@ -35,6 +37,9 @@ const useFetchImages = () => {
   };
 
   useEffect(() => {
+    console.log(
+      "calling from images box when change searchkey or selected tag!"
+    );
     searchHandler();
   }, [searchKey, selectedCTag]);
 

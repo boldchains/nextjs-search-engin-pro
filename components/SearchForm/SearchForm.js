@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import Router from "next/router";
-import { useDispatch } from "react-redux";
-import { setSearchKey, clearArticles } from "services/reducers/search/actions";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 import { makeStyles } from "@material-ui/core/styles";
 import styles from "assets/jss/components/searchFormStyle.js";
@@ -24,31 +22,27 @@ function useSearchFormInput(initialValue) {
 
 export default function SearchForm() {
   const classes = useStyles();
-  const searchKey = useSearchFormInput("");
-
-  const dispatch = useDispatch();
+  const router = useRouter();
+  const searchKey = useSearchFormInput(router.query.q ? router.query.q : "");
 
   function searchArticlesHandler(event) {
     event.preventDefault();
 
-    dispatch(setSearchKey(searchKey.value));
-    dispatch(clearArticles());
-
-    const { pathname } = Router;
+    const { pathname } = router;
     if (pathname == "/") {
-      Router.push(
-        "/",
-        {
-          pathname: "/",
-          query: {
-            ...Router.query,
-            q: searchKey.value
-          }
-        },
-        { shallow: true }
-      );
+      router.push({
+        pathname: "/",
+        query: {
+          ...router.query,
+          q: searchKey.value
+        }
+      });
     }
   }
+
+  useEffect(() => {
+    console.log("is changing router", router.query.q);
+  }, [router.query.q]);
 
   return (
     <form
