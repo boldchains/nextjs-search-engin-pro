@@ -1,5 +1,5 @@
 import {
-  SET_LANGUAGE,
+  SET_LOCATION_INFO,
   SET_SEARCH_KEY,
   ADD_ARTICLES,
   CLEAR_ARTICLES,
@@ -12,8 +12,8 @@ import {
   SET_VIDEOS
 } from "./actionTypes";
 
-export const setLanugage = lang => {
-  return { type: SET_LANGUAGE, payload: lang };
+export const setLocation = location => {
+  return { type: SET_LOCATION_INFO, payload: location };
 };
 
 export const addArticles = articles => {

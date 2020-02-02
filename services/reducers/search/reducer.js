@@ -1,6 +1,6 @@
 import {
   SET_SEARCH_KEY,
-  SET_LANGUAGE,
+  SET_LOCATION_INFO,
   ADD_ARTICLES,
   CLEAR_ARTICLES,
   SET_VIDEOS,
@@ -16,7 +16,7 @@ const defaultTag = { _id: "All", selected: true };
 
 const initialState = {
   searchKey: "",
-  lang: "en",
+  location: {},
   articles: [],
   videos: [],
   images: [],
@@ -30,10 +30,10 @@ const initialState = {
 
 export default function(state = initialState, { type, payload }) {
   switch (type) {
-    case SET_LANGUAGE:
+    case SET_LOCATION_INFO:
       return {
         ...state,
-        lang: payload
+        location: payload
       };
     case SET_ARTICLE_TAG:
       return {
