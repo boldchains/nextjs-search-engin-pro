@@ -1,3 +1,5 @@
+export const DEFAULT_COUNTRY_CODE = "en";
+
 export const LOCATION_DETECT_API = "https://extreme-ip-lookup.com/json/";
 export const TAGS_API_URL = "https://managerimages.vavel.com/api/tag/listtags";
 export const VIDEOS_API_URL = "https://www.googleapis.com/youtube/v3/search";
