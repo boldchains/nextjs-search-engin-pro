@@ -9,13 +9,15 @@ import ArticlesSection from "page-sections/home-sections/ArticlesSection.js";
 import {
   setAllTags,
   clearArticles,
-  setSearchKey
+  setSearchKey,
+  setLocation
 } from "services/reducers/search/actions.js";
 
 import {
   DEFAULT_COUNTRY_CODE,
   TAGS_API_URL,
-  PHOTO_STATIC_URL
+  PHOTO_STATIC_URL,
+  LOCATION_DETECT_API
 } from "utils/Consts.js";
 
 const Index = () => {
@@ -70,6 +72,12 @@ Index.getInitialProps = async function({ store }) {
   });
 
   store.dispatch(setAllTags(tagList));
+
+  // fetch location data
+  const locationResp = await fetch(LOCATION_DETECT_API);
+  const location = await locationResp.json();
+
+  store.dispatch(setLocation(location));
 };
 
 export default connect(state => state)(withRouter(Index));
