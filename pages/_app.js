@@ -1,8 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "next/app";
-import Head from "next/head";
 import Router from "next/router";
+import withRedux from "next-redux-wrapper";
+import { Provider } from "react-redux";
+import { makeStore } from "services/store.js";
 
 import PageChange from "components/PageChange/PageChange.js";
 
@@ -25,8 +27,8 @@ Router.events.on("routeChangeError", () => {
   document.body.classList.remove("body-page-transition");
 });
 
-export default class MyApp extends App {
-  static async getInitialProps({ Component, router, ctx }) {
+class VavelSearchApp extends App {
+  static async getInitialProps({ Component, ctx }) {
     let pageProps = {};
 
     if (Component.getInitialProps) {
@@ -35,16 +37,16 @@ export default class MyApp extends App {
 
     return { pageProps };
   }
+
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps, store } = this.props;
 
     return (
-      <React.Fragment>
-        <Head>
-          <title>Vavel Search</title>
-        </Head>
+      <Provider store={store}>
         <Component {...pageProps} />
-      </React.Fragment>
+      </Provider>
     );
   }
 }
+
+export default withRedux(makeStore)(VavelSearchApp);
