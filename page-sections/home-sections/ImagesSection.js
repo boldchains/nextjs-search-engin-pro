@@ -37,9 +37,6 @@ const useFetchImages = () => {
   };
 
   useEffect(() => {
-    console.log(
-      "calling from images box when change searchkey or selected tag!"
-    );
     searchHandler();
   }, [searchKey, selectedCTag]);
 

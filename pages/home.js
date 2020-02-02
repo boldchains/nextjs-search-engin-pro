@@ -40,7 +40,6 @@ const fetchTags = async () => {
 const Home = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const searchKey = useSelector(state => state.searchStates.searchKey);
   const lang = useSelector(state => state.searchStates.lang);
 
   const fetchHandler = async () => {
@@ -49,11 +48,9 @@ const Home = () => {
   };
 
   useEffect(() => {
-    console.log(
-      "calling from home page when change router!",
-      router.query.q + " : " + searchKey
-    );
     const query = router.query;
+    console.log("home query:", query.q);
+
     if (!query.l) {
       router.push({
         pathname: "/",
@@ -64,8 +61,8 @@ const Home = () => {
       });
     }
 
-    dispatch(setSearchKey(router.query.q));
     dispatch(clearArticles());
+    dispatch(setSearchKey(query.q ? query.q : ""));
 
     fetchHandler();
   }, [router.query.q]);

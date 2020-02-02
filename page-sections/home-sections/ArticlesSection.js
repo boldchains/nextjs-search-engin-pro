@@ -16,10 +16,12 @@ import Gallery from "react-photo-gallery";
 import styles from "assets/jss/page-sections/home-sections/articlesSectionStyle.js";
 
 import { CORS_PROXY_URL, ARTICLES_API_URL } from "utils/Consts.js";
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles(styles);
 
 async function fetchArticles(params) {
+  console.log("article fetch params:", params);
   let url = `${ARTICLES_API_URL}?l=${params.lang}&page=${params.page}&q=${params.query}`;
 
   const response = await fetch(CORS_PROXY_URL + url);
@@ -36,14 +38,9 @@ function useFetchArticles() {
   const [isFetching, setIsFetching] = useState(true);
   const lang = useSelector(state => state.searchStates.lang);
 
-  async function fetchArticlesHandler() {
+  async function fetchArticlesHandler(params) {
     setIsFetching(true);
-
-    const fetchedData = await fetchArticles({
-      page: articlesPage,
-      query: searchKey,
-      lang: lang
-    });
+    const fetchedData = await fetchArticles(params);
     setIsFetching(false);
 
     fetchedData && dispatch(addArticles(fetchedData));
@@ -59,7 +56,11 @@ function useFetchArticles() {
 
       const wrappedElement = document.getElementById("gallery");
       if (wrappedElement && isBottom(wrappedElement)) {
-        fetchArticlesHandler();
+        fetchArticlesHandler({
+          page: articlesPage,
+          query: searchKey,
+          lang: lang
+        });
         window.removeEventListener("scroll", handleScroll);
       }
     };
@@ -69,12 +70,13 @@ function useFetchArticles() {
     };
   }, [articles]);
 
+  const router = useRouter();
   useEffect(() => {
-    fetchArticlesHandler();
-    console.log(
-      "calling from articles section when change searchkey!",
-      searchKey
-    );
+    fetchArticlesHandler({
+      page: articlesPage,
+      query: router.query.q ? router.query.q : "",
+      lang: lang
+    });
   }, [searchKey]);
 
   return {
@@ -127,8 +129,9 @@ const useFetchTags = () => {
   };
 
   useEffect(() => {
-    searchKey && searchKey !== "" && searchHandler();
-  }, [searchKey, selectedATag]);
+    searchHandler(searchKey);
+    console.log("articles section tags filter:", searchKey);
+  }, [searchKey]);
 
   return {
     data: tags,
@@ -136,7 +139,7 @@ const useFetchTags = () => {
   };
 };
 
-const TotalSection = () => {
+const ArticlesSection = () => {
   const classes = useStyles();
 
   const articleTags = useFetchTags();
@@ -179,6 +182,6 @@ const TotalSection = () => {
   );
 };
 
-TotalSection.getInitialProps = async function(context) {};
+ArticlesSection.getInitialProps = async function(context) {};
 
-export default TotalSection;
+export default ArticlesSection;

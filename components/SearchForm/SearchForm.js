@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 
 import { makeStyles } from "@material-ui/core/styles";
 import styles from "assets/jss/components/searchFormStyle.js";
+import { useDispatch } from "react-redux";
+import { setSearchKey } from "services/reducers/search/actions.js";
 
 const useStyles = makeStyles(styles);
 
@@ -22,27 +24,26 @@ function useSearchFormInput(initialValue) {
 
 export default function SearchForm() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const router = useRouter();
-  const searchKey = useSearchFormInput(router.query.q ? router.query.q : "");
+  const { pathname, query } = router;
+  const input = useSearchFormInput(query.q ? query.q : "");
 
   function searchArticlesHandler(event) {
     event.preventDefault();
 
-    const { pathname } = router;
     if (pathname == "/") {
       router.push({
         pathname: "/",
         query: {
-          ...router.query,
-          q: searchKey.value
+          ...query,
+          q: input.value
         }
       });
     }
-  }
 
-  useEffect(() => {
-    console.log("is changing router", router.query.q);
-  }, [router.query.q]);
+    dispatch(setSearchKey(input.value));
+  }
 
   return (
     <form
@@ -53,8 +54,8 @@ export default function SearchForm() {
         <input
           type="text"
           className={`form-control ${classes.formControl}`}
-          {...searchKey}
-          value={searchKey.value}
+          {...input}
+          value={input.value}
           placeholder="Search what you want"
         />
         <div className="input-group-append">
