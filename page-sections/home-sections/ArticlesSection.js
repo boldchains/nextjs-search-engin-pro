@@ -21,7 +21,6 @@ import { useRouter } from "next/router";
 const useStyles = makeStyles(styles);
 
 async function fetchArticles(params) {
-  console.log("article fetch params:", params);
   let url = `${ARTICLES_API_URL}?l=${params.lang}&page=${params.page}&q=${params.query}`;
 
   const response = await fetch(CORS_PROXY_URL + url);
@@ -35,17 +34,25 @@ function useFetchArticles() {
   const searchKey = useSelector(state => state.searchStates.searchKey);
   const dispatch = useDispatch();
 
-  const [isFetching, setIsFetching] = useState(true);
-  const lang = useSelector(state => state.searchStates.lang);
+  const [isFetching, setIsFetching] = useState(false);
+  const [fetchable, setFetchable] = useState(true);
+  const location = useSelector(state => state.searchStates.location);
+  const countryCode = location.countryCode
+    ? location.countryCode.toLowerCase()
+    : "en";
 
   async function fetchArticlesHandler(params) {
     setIsFetching(true);
     const fetchedData = await fetchArticles(params);
     setIsFetching(false);
 
-    fetchedData && dispatch(addArticles(fetchedData));
+    setFetchable(fetchedData.length === 20);
+    if (fetchable) {
+      fetchedData && dispatch(addArticles(fetchedData));
+    }
   }
 
+  const router = useRouter();
   useEffect(() => {
     const isBottom = el => {
       return el.getBoundingClientRect().bottom <= window.innerHeight;
@@ -58,25 +65,17 @@ function useFetchArticles() {
       if (wrappedElement && isBottom(wrappedElement)) {
         fetchArticlesHandler({
           page: articlesPage,
-          query: searchKey,
-          lang: lang
+          query: searchKey === "" ? router.query.q : searchKey,
+          lang: countryCode
         });
         window.removeEventListener("scroll", handleScroll);
       }
     };
-    window.addEventListener("scroll", handleScroll, false);
+
+    fetchable && window.addEventListener("scroll", handleScroll, false);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [articles]);
-
-  const router = useRouter();
-  useEffect(() => {
-    fetchArticlesHandler({
-      page: articlesPage,
-      query: router.query.q ? router.query.q : "",
-      lang: lang
-    });
   }, [searchKey]);
 
   return {
@@ -130,8 +129,7 @@ const useFetchTags = () => {
 
   useEffect(() => {
     searchHandler(searchKey);
-    console.log("articles section tags filter:", searchKey);
-  }, [searchKey]);
+  }, [searchKey, selectedATag]);
 
   return {
     data: tags,
