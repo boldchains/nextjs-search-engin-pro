@@ -4,10 +4,9 @@
   "description": "Search Medias from vavel.com",
   "main": "index.js",
   "scripts": {
-    "test": "test",
-    "dev": "node server.js",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js",
+    "start": "next start",
+    "dev": "next -p 3010",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && rm -rf .next/ && npm install && npm run dev"
   },
   "repository": {
@@ -30,7 +29,6 @@
     "@material-ui/icons": "4.2.1",
     "@material-ui/lab": "^4.0.0-alpha.40",
     "@zeit/next-sass": "1.0.1",
-    "axios": "^0.19.2",
     "classnames": "2.2.6",
     "drag-scroll-provider": "^1.0.6",
     "isomorphic-fetch": "^2.2.1",
@@ -58,8 +56,6 @@
     "react-slick": "0.25.2",
     "react-swipeable-views": "0.13.3",
     "redux": "^4.0.5",
-    "redux-devtools-extension": "^2.13.8",
-    "redux-thunk": "^2.3.0",
     "styled-components": "4.3.2",
     "webpack": "4.39.3"
   }
