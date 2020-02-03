@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import { makeStyles } from "@material-ui/core/styles";
-import styles from "assets/jss/components/searchFormStyle.js";
 import { useDispatch } from "react-redux";
-import { setSearchKey } from "services/reducers/search/actions.js";
+
+import styles from "assets/jss/components/searchFormStyle.js";
 
 const useStyles = makeStyles(styles);
 
@@ -41,8 +41,6 @@ export default function SearchForm() {
         }
       });
     }
-
-    dispatch(setSearchKey(input.value));
   }
 
   return (
