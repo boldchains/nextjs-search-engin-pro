@@ -100,8 +100,7 @@ function useShowGallery(initialState) {
   return showGallery;
 }
 
-const useFetchTags = () => {
-  const allTags = useSelector(state => state.searchStates.allTags);
+const useFilterTags = allTags => {
   const selectedATag = useSelector(state => state.searchStates.selectedATag);
   const tags = useSelector(state => state.searchStates.articleTags);
   const searchKey = useSelector(state => state.searchStates.searchKey);
@@ -143,9 +142,10 @@ const useFetchTags = () => {
 };
 
 const ArticlesSection = props => {
-  const classes = useStyles();
+  const { allTags, articles, page, location } = props.searchStates;
 
-  const { allTags, articles, page } = props.searchStates;
+  const classes = useStyles();
+  const articleTags = useFilterTags(allTags ? [] : []);
 
   const showGallery = useShowGallery(false);
   const imageData = articles.map((item, index) => {
@@ -160,7 +160,7 @@ const ArticlesSection = props => {
 
   return (
     <Card className={classes.boxedCard}>
-      {/* <Tags tags={articleTags} /> */}
+      <Tags tags={articleTags} />
       {
         <div id="gallery">
           {showGallery && (

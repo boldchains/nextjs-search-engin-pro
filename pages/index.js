@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
-import { useRouter, withRouter } from "next/router";
+import { connect } from "react-redux";
+import { withRouter, useRouter } from "next/router";
 import fetch from "isomorphic-fetch";
 
 import Layout from "components/Layout/Layout.js";
@@ -23,6 +23,19 @@ import {
 } from "utils/Consts.js";
 
 const Index = props => {
+  const { query } = props.router;
+  const { location } = props.searchStates;
+  const router = useRouter();
+  useEffect(() => {
+    router.push({
+      pathname: "/",
+      query: {
+        ...query,
+        l: query.l ? query.l : location
+      }
+    });
+  }, []);
+
   return (
     <Layout>
       {/* <CategoriesSection /> */}
@@ -59,7 +72,9 @@ Index.getInitialProps = async function({ store, isServer, pathname, query }) {
   // get initial acticles
   const keyword = query.q ? query.q : "";
   const initArticlesResp = await fetch(
-    `${ARTICLES_API_URL}?l=${browserLocation}&page=1&q=${keyword}`
+    `${
+      !isServer ? CORS_PROXY_URL + ARTICLES_API_URL : ARTICLES_API_URL
+    }?l=${browserLocation}&page=1&q=${keyword}`
   );
   const response = await initArticlesResp.json();
 
