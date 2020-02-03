@@ -6,78 +6,57 @@ import Layout from "components/Layout/Layout.js";
 import CategoriesSection from "page-sections/home-sections/CategoriesSection.js";
 import ArticlesSection from "page-sections/home-sections/ArticlesSection.js";
 
-import {
-  setAllTags,
-  clearArticles,
-  setSearchKey,
-  setLocation
-} from "services/reducers/search/actions.js";
+import { setLocation, setAllTags } from "services/reducers/search/actions.js";
+import { DEFAULT_COUNTRY_CODE } from "utils/Consts.js";
 
 import {
-  DEFAULT_COUNTRY_CODE,
   TAGS_API_URL,
-  PHOTO_STATIC_URL,
-  LOCATION_DETECT_API
+  LOCATION_DETECT_API,
+  CORS_PROXY_URL
 } from "utils/Consts.js";
 
-const Index = () => {
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const location = useSelector(state => state.searchStates.location);
-  const countryCode =
-    location && location.countryCode
-      ? location.countryCode.toLowerCase()
-      : DEFAULT_COUNTRY_CODE;
-
-  useEffect(() => {
-    const query = router.query;
-    if (!query.l) {
-      router.push({
-        pathname: "/",
-        query: {
-          ...query,
-          l: countryCode
-        }
-      });
-    }
-
-    dispatch(clearArticles());
-    dispatch(setSearchKey(query.q ? query.q : ""));
-  }, [router.query.q]);
+const Index = props => {
+  console.log("index, props:", props);
 
   return (
     <Layout>
-      <CategoriesSection />
-      <ArticlesSection />
+      {/* <CategoriesSection /> */}
+      <ArticlesSection props={props.searchStates} />
     </Layout>
   );
 };
 
-Index.getInitialProps = async function({ store }) {
-  // fetch all tag list
-  const resp = await fetch(TAGS_API_URL);
-  const tags = await resp.json();
-
-  tags.listtags = tags.listtags || [];
-  const tagList = tags.listtags.map(item => {
-    if (item.tag && item.tag.logo) item.logo = PHOTO_STATIC_URL + item.tag.logo;
-    else {
-      let find = item.list_tags.find(i => i.logo);
-      if (find) {
-        item.logo = PHOTO_STATIC_URL + find.logo;
-      }
-    }
-    item.selected = false;
-    return item;
-  });
-
-  store.dispatch(setAllTags(tagList));
+Index.getInitialProps = async function({ store, isServer, pathname, query }) {
+  if (pathname !== "/") {
+    return {};
+  }
 
   // fetch location data
   const locationResp = await fetch(LOCATION_DETECT_API);
   const location = await locationResp.json();
+  const userLocation = location.countryCode
+    ? location.countryCode.toLowerCase()
+    : DEFAULT_COUNTRY_CODE;
 
-  store.dispatch(setLocation(location));
+  store.dispatch(setLocation(query.l ? query.l : userLocation));
+
+  // fetch all tag list
+  const resp = await fetch(
+    !isServer ? CORS_PROXY_URL + TAGS_API_URL : TAGS_API_URL
+  );
+  const tags = await resp.json();
+  store.dispatch(setAllTags(tags.type === "success" && tags.listtags));
+
+  // async add get articles action
+  const getArticles = params => {
+    return fetch(`${ARTICLES_API_URL}`, {
+      query: params
+    });
+  };
+
+  return {
+    getArticlesHandler: getArticles
+  };
 };
 
 export default connect(state => state)(withRouter(Index));

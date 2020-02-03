@@ -31,15 +31,11 @@ async function fetchArticles(params) {
 function useFetchArticles() {
   const articles = useSelector(state => state.searchStates.articles);
   const articlesPage = useSelector(state => state.searchStates.page);
-  const searchKey = useSelector(state => state.searchStates.searchKey);
-  const dispatch = useDispatch();
 
   const [isFetching, setIsFetching] = useState(false);
   const [fetchable, setFetchable] = useState(true);
-  const location = useSelector(state => state.searchStates.location);
-  const countryCode = location.countryCode
-    ? location.countryCode.toLowerCase()
-    : "en";
+
+  const dispatch = useDispatch();
 
   async function fetchArticlesHandler(params) {
     setIsFetching(true);
@@ -47,12 +43,21 @@ function useFetchArticles() {
     setIsFetching(false);
 
     setFetchable(fetchedData.length === 20);
-    if (fetchable) {
-      fetchedData && dispatch(addArticles(fetchedData));
-    }
+    dispatch(addArticles(fetchedData));
   }
 
   const router = useRouter();
+  const { query } = router;
+  const params = {
+    page: articlesPage,
+    query: query.q ? query.q : "",
+    lang: query.l
+  };
+
+  useEffect(() => {
+    fetchArticlesHandler(params);
+  }, [router.query.q]);
+
   useEffect(() => {
     const isBottom = el => {
       return el.getBoundingClientRect().bottom <= window.innerHeight;
@@ -62,21 +67,17 @@ function useFetchArticles() {
       e.preventDefault();
 
       const wrappedElement = document.getElementById("gallery");
-      if (wrappedElement && isBottom(wrappedElement)) {
-        fetchArticlesHandler({
-          page: articlesPage,
-          query: searchKey === "" ? router.query.q : searchKey,
-          lang: countryCode
-        });
+      if (fetchable && wrappedElement && isBottom(wrappedElement)) {
+        fetchArticlesHandler(params);
         window.removeEventListener("scroll", handleScroll);
       }
     };
 
-    fetchable && window.addEventListener("scroll", handleScroll, false);
+    window.addEventListener("scroll", handleScroll, false);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [searchKey]);
+  }, []);
 
   return {
     data: articles,
@@ -179,7 +180,5 @@ const ArticlesSection = () => {
     </Card>
   );
 };
-
-ArticlesSection.getInitialProps = async function(context) {};
 
 export default ArticlesSection;
