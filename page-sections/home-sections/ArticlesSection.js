@@ -15,7 +15,11 @@ import Tags from "components/Tags/Tags.js";
 import Gallery from "react-photo-gallery";
 import styles from "assets/jss/page-sections/home-sections/articlesSectionStyle.js";
 
-import { CORS_PROXY_URL, ARTICLES_API_URL } from "utils/Consts.js";
+import {
+  CORS_PROXY_URL,
+  ARTICLES_API_URL,
+  ARTICLES_LIMIT
+} from "utils/Consts.js";
 import { useRouter } from "next/router";
 
 const useStyles = makeStyles(styles);
@@ -138,23 +142,15 @@ const useFetchTags = () => {
   };
 };
 
-const ArticlesSection = () => {
+const ArticlesSection = props => {
   const classes = useStyles();
 
-  const articleTags = useFetchTags();
-  const articles = useFetchArticles();
+  const { allTags, articles, page } = props.searchStates;
+
   const showGallery = useShowGallery(false);
-
-  const fakeData = Array.from(new Array(20)).map(item => {
-    return {};
-  });
-  const renderableData = articles.isFetching
-    ? [...articles.data, ...fakeData]
-    : articles.data;
-
-  const imageData = renderableData.map((item, index) => {
+  const imageData = articles.map((item, index) => {
     return {
-      key: (articles.page * 20 + index).toString(),
+      key: (page * ARTICLES_LIMIT + index).toString(),
       src: item.image && item.image.url ? item.image.url : "",
       photo: item,
       width: 4,
@@ -164,7 +160,7 @@ const ArticlesSection = () => {
 
   return (
     <Card className={classes.boxedCard}>
-      <Tags tags={articleTags} />
+      {/* <Tags tags={articleTags} /> */}
       {
         <div id="gallery">
           {showGallery && (

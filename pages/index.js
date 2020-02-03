@@ -1,27 +1,32 @@
 import React, { useEffect } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { useRouter, withRouter } from "next/router";
+import fetch from "isomorphic-fetch";
 
 import Layout from "components/Layout/Layout.js";
 import CategoriesSection from "page-sections/home-sections/CategoriesSection.js";
 import ArticlesSection from "page-sections/home-sections/ArticlesSection.js";
 
-import { setLocation, setAllTags } from "services/reducers/search/actions.js";
-import { DEFAULT_COUNTRY_CODE } from "utils/Consts.js";
+import {
+  setLocation,
+  setAllTags,
+  clearArticles,
+  addArticles
+} from "services/reducers/search/actions.js";
 
 import {
   TAGS_API_URL,
   LOCATION_DETECT_API,
-  CORS_PROXY_URL
+  CORS_PROXY_URL,
+  DEFAULT_COUNTRY_CODE,
+  ARTICLES_API_URL
 } from "utils/Consts.js";
 
 const Index = props => {
-  console.log("index, props:", props);
-
   return (
     <Layout>
       {/* <CategoriesSection /> */}
-      <ArticlesSection props={props.searchStates} />
+      <ArticlesSection {...props} />
     </Layout>
   );
 };
@@ -37,8 +42,9 @@ Index.getInitialProps = async function({ store, isServer, pathname, query }) {
   const userLocation = location.countryCode
     ? location.countryCode.toLowerCase()
     : DEFAULT_COUNTRY_CODE;
+  const browserLocation = query.l ? query.l : userLocation;
 
-  store.dispatch(setLocation(query.l ? query.l : userLocation));
+  store.dispatch(setLocation(browserLocation));
 
   // fetch all tag list
   const resp = await fetch(
@@ -47,16 +53,17 @@ Index.getInitialProps = async function({ store, isServer, pathname, query }) {
   const tags = await resp.json();
   store.dispatch(setAllTags(tags.type === "success" && tags.listtags));
 
-  // async add get articles action
-  const getArticles = params => {
-    return fetch(`${ARTICLES_API_URL}`, {
-      query: params
-    });
-  };
+  // celar artilces action
+  store.dispatch(clearArticles());
 
-  return {
-    getArticlesHandler: getArticles
-  };
+  // get initial acticles
+  const keyword = query.q ? query.q : "";
+  const initArticlesResp = await fetch(
+    `${ARTICLES_API_URL}?l=${browserLocation}&page=1&q=${keyword}`
+  );
+  const response = await initArticlesResp.json();
+
+  store.dispatch(addArticles(response.articles));
 };
 
 export default connect(state => state)(withRouter(Index));

@@ -10,3 +10,5 @@ export const ARTICLES_API_URL = "https://search.vavel.com/api/articles";
 export const SEARCH_KEYWORD_API = "https://search.vavel.com/api/autocomplete";
 export const PHOTO_STATIC_URL =
   "https://stock.vavel.com/s/photoImages/bunch/h200_";
+
+export const ARTICLES_LIMIT = 20;
