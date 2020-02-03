@@ -1,4 +1,5 @@
 export const DEFAULT_COUNTRY_CODE = "en";
+export const ARTICLES_LIMIT = 20;
 
 export const LOCATION_DETECT_API = "https://extreme-ip-lookup.com/json/";
 export const TAGS_API_URL = "https://managerimages.vavel.com/api/tag/listtags";
@@ -10,5 +11,3 @@ export const ARTICLES_API_URL = "https://search.vavel.com/api/articles";
 export const SEARCH_KEYWORD_API = "https://search.vavel.com/api/autocomplete";
 export const PHOTO_STATIC_URL =
   "https://stock.vavel.com/s/photoImages/bunch/h200_";
-
-export const ARTICLES_LIMIT = 20;
