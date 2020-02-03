@@ -1,13 +1,10 @@
 import {
-  SET_SEARCH_KEY,
-  SET_LOCATION_INFO,
+  GET_LOCATION,
   ADD_ARTICLES,
   CLEAR_ARTICLES,
-  SET_VIDEOS,
-  SET_IMAGES,
-  SET_ALL_TAGS,
-  SET_CATEGORY_TAGS,
-  SET_ARTICLE_TAGS,
+  GET_VIDEOS,
+  GET_IMAGES,
+  GET_ALL_TAGS,
   SET_CATEGORY_TAG,
   SET_ARTICLE_TAG
 } from "./actionTypes";
@@ -30,7 +27,7 @@ const initialState = {
 
 export default function(state = initialState, { type, payload }) {
   switch (type) {
-    case SET_LOCATION_INFO:
+    case GET_LOCATION:
       return {
         ...state,
         location: payload
@@ -45,38 +42,33 @@ export default function(state = initialState, { type, payload }) {
         ...state,
         selectedCTag: payload
       };
-    case SET_ALL_TAGS:
+    case GET_ALL_TAGS:
       return {
         ...state,
         allTags: payload
       };
-    case SET_SEARCH_KEY:
-      return {
-        ...state,
-        searchKey: payload
-      };
-    case SET_CATEGORY_TAGS:
-      return {
-        ...state,
-        categoryTags:
-          payload && payload.length > 0
-            ? [defaultTag, ...payload]
-            : [defaultTag]
-      };
-    case SET_ARTICLE_TAGS:
-      return {
-        ...state,
-        articleTags:
-          payload && payload.length > 0
-            ? [defaultTag, ...payload]
-            : [defaultTag]
-      };
-    case SET_VIDEOS:
+    // case SET_CATEGORY_TAGS:
+    //   return {
+    //     ...state,
+    //     categoryTags:
+    //       payload && payload.length > 0
+    //         ? [defaultTag, ...payload]
+    //         : [defaultTag]
+    //   };
+    // case SET_ARTICLE_TAGS:
+    //   return {
+    //     ...state,
+    //     articleTags:
+    //       payload && payload.length > 0
+    //         ? [defaultTag, ...payload]
+    //         : [defaultTag]
+    //   };
+    case GET_VIDEOS:
       return {
         ...state,
         videos: payload
       };
-    case SET_IMAGES:
+    case GET_IMAGES:
       return {
         ...state,
         images: payload

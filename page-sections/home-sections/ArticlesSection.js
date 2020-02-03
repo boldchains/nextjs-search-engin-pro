@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import fetch from "isomorphic-unfetch";
 import {
   addArticles,
-  setArticleTags,
   setArticleTag
 } from "services/reducers/search/actions.js";
 
@@ -32,36 +31,7 @@ async function fetchArticles(params) {
   return jsonResponse.articles;
 }
 
-function useFetchArticles() {
-  const articles = useSelector(state => state.searchStates.articles);
-  const articlesPage = useSelector(state => state.searchStates.page);
-
-  const [isFetching, setIsFetching] = useState(false);
-  const [fetchable, setFetchable] = useState(true);
-
-  const dispatch = useDispatch();
-
-  async function fetchArticlesHandler(params) {
-    setIsFetching(true);
-    const fetchedData = await fetchArticles(params);
-    setIsFetching(false);
-
-    setFetchable(fetchedData.length === 20);
-    dispatch(addArticles(fetchedData));
-  }
-
-  const router = useRouter();
-  const { query } = router;
-  const params = {
-    page: articlesPage,
-    query: query.q ? query.q : "",
-    lang: query.l
-  };
-
-  useEffect(() => {
-    fetchArticlesHandler(params);
-  }, [router.query.q]);
-
+function useFetchArticles(params) {
   useEffect(() => {
     const isBottom = el => {
       return el.getBoundingClientRect().bottom <= window.innerHeight;
@@ -69,10 +39,9 @@ function useFetchArticles() {
 
     const handleScroll = e => {
       e.preventDefault();
-
       const wrappedElement = document.getElementById("gallery");
-      if (fetchable && wrappedElement && isBottom(wrappedElement)) {
-        fetchArticlesHandler(params);
+      if (wrappedElement && isBottom(wrappedElement)) {
+        params.handler(params.query);
         window.removeEventListener("scroll", handleScroll);
       }
     };
@@ -83,11 +52,7 @@ function useFetchArticles() {
     };
   }, []);
 
-  return {
-    data: articles,
-    page: articlesPage,
-    isFetching: isFetching
-  };
+  return {};
 }
 
 function useShowGallery(initialState) {
@@ -101,10 +66,7 @@ function useShowGallery(initialState) {
 }
 
 const useFilterTags = allTags => {
-  const selectedATag = useSelector(state => state.searchStates.selectedATag);
   const tags = useSelector(state => state.searchStates.articleTags);
-  const searchKey = useSelector(state => state.searchStates.searchKey);
-
   const dispatch = useDispatch();
 
   const searchHandler = () => {
@@ -112,43 +74,37 @@ const useFilterTags = allTags => {
       return item._id.toLowerCase().indexOf(searchKey.toLowerCase()) >= 0;
     });
     const tagList = allTags ? filteredList : [];
-    dispatch(setArticleTags(tagList));
   };
 
-  const onSelect = index => {
-    const clonedTags = [...tags];
-    clonedTags &&
-      clonedTags.map((item, idx) => {
-        item.selected = idx === index;
-      });
+  const onSelect = index => {};
 
-    const selectedTag = clonedTags[index];
-    if (selectedTag && selectedTag._id !== "All") {
-      dispatch(setArticleTag(selectedTag._id));
-    }
-
-    clonedTags.shift();
-    dispatch(setArticleTags(clonedTags));
-  };
-
-  useEffect(() => {
-    searchHandler(searchKey);
-  }, [searchKey, selectedATag]);
+  useEffect(() => {}, []);
 
   return {
-    data: tags,
+    data: allTags.slice(0, 20),
     onSelect: onSelect
   };
 };
 
 const ArticlesSection = props => {
-  const { allTags, articles, page, location } = props.searchStates;
-
   const classes = useStyles();
-  const articleTags = useFilterTags(allTags ? [] : []);
+
+  const initStates = props.searchStates;
+  const page = initStates.page;
+
+  const articleTags = useFilterTags(initStates.allTags);
+  const articlesFetcher = useFetchArticles({
+    handler: props.addArticles,
+    query: {
+      page: initStates.page,
+      query: initStates.searchKey,
+      lang: initStates.location
+    }
+  });
 
   const showGallery = useShowGallery(false);
-  const imageData = articles.map((item, index) => {
+  const articlesData = initStates.articles;
+  const imageData = articlesData.map((item, index) => {
     return {
       key: (page * ARTICLES_LIMIT + index).toString(),
       src: item.image && item.image.url ? item.image.url : "",
