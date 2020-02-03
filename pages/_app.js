@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App, { Container } from "next/app";
+import App from "next/app";
 import Router from "next/router";
 import withRedux from "next-redux-wrapper";
 import { Provider } from "react-redux";
@@ -42,11 +42,9 @@ class VavelSearchApp extends App {
     const { Component, pageProps, store } = this.props;
 
     return (
-      <Container>
-        <Provider store={store}>
-          <Component {...pageProps} />
-        </Provider>
-      </Container>
+      <Provider store={store}>
+        <Component {...pageProps} />
+      </Provider>
     );
   }
 }
