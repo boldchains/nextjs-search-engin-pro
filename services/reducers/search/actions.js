@@ -19,30 +19,52 @@ import {
   TAGS_API_URL
 } from "utils/Consts.js";
 
-export const getLocation = () => dispatch =>
+export const getLocation = queryLang => dispatch =>
   axios({
     method: "GET",
     url: LOCATION_DETECT_API,
     headers: []
-  }).then(response => dispatch({ type: GET_LOCATION, payload: response.data }));
+  })
+    .then(response => {
+      if (response.status === 200) {
+        const { countryCode } = response.data;
+        const location = queryLang ? queryLang : countryCode.toLowerCase();
+        dispatch({
+          type: GET_LOCATION,
+          payload: location
+        });
+      }
+    })
+    .catch(err => {});
 
 export const addArticles = params => dispatch =>
   axios({
     method: "GET",
-    url: `${ARTICLES_API_URL}?l=${params.lang}&page=${params.page}&q=${params.query}`,
+    url: `${CORS_PROXY_URL + ARTICLES_API_URL}?l=${params.lang}&page=${
+      params.page
+    }&q=${params.query}`,
     headers: []
-  }).then(response => dispatch({ type: ADD_ARTICLES, payload: response.data }));
+  })
+    .then(response => {
+      if (response.status === 200) {
+        dispatch({ type: ADD_ARTICLES, payload: response.data.articles });
+      }
+    })
+    .catch(err => {});
 
 export const clearArticles = () => {
   return { type: CLEAR_ARTICLES, payload: "" };
 };
 
 export const getAllTags = () => dispatch =>
-  axios({
-    method: "GET",
-    url: TAGS_API_URL,
-    headers: []
-  }).then(response => dispatch({ type: GET_ALL_TAGS, payload: response.data }));
+  axios
+    .get(CORS_PROXY_URL + TAGS_API_URL)
+    .then(response => {
+      if (response.status === 200) {
+        dispatch({ type: GET_ALL_TAGS, payload: response.data.listtags });
+      }
+    })
+    .catch(err => {});
 
 export const getImages = () => dispatch =>
   axios({
