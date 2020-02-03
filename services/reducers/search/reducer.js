@@ -25,7 +25,7 @@ const initialState = {
   categoryTags: [defaultTag],
   selectedCTag: "",
   selectedATag: "",
-  page: 1
+  page: 0
 };
 
 export default function(state = initialState, { type, payload }) {
@@ -91,7 +91,7 @@ export default function(state = initialState, { type, payload }) {
       return {
         ...state,
         articles: [],
-        page: 1
+        page: 0
       };
     default:
       return state;

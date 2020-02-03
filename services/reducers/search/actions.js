@@ -1,44 +1,62 @@
+import axios from "axios";
 import {
-  SET_LOCATION_INFO,
-  SET_SEARCH_KEY,
+  GET_LOCATION,
   ADD_ARTICLES,
   CLEAR_ARTICLES,
-  SET_ALL_TAGS,
-  SET_ARTICLE_TAGS,
-  SET_CATEGORY_TAGS,
+  GET_ALL_TAGS,
   SET_CATEGORY_TAG,
   SET_ARTICLE_TAG,
-  SET_IMAGES,
-  SET_VIDEOS
+  GET_IMAGES,
+  GET_VIDEOS
 } from "./actionTypes";
 
-export const setLocation = location => {
-  return { type: SET_LOCATION_INFO, payload: location };
-};
+import {
+  LOCATION_DETECT_API,
+  CORS_PROXY_URL,
+  ARTICLES_API_URL,
+  IMAGES_API_URL,
+  VIDEOS_API_URL,
+  TAGS_API_URL
+} from "utils/Consts.js";
 
-export const addArticles = articles => {
-  return { type: ADD_ARTICLES, payload: articles };
-};
+export const getLocation = () => dispatch =>
+  axios({
+    method: "GET",
+    url: LOCATION_DETECT_API,
+    headers: []
+  }).then(response => dispatch({ type: GET_LOCATION, payload: response.data }));
 
-export const setSearchKey = searchKey => {
-  return { type: SET_SEARCH_KEY, payload: searchKey };
-};
+export const addArticles = params => dispatch =>
+  axios({
+    method: "GET",
+    url: `${ARTICLES_API_URL}?l=${params.lang}&page=${params.page}&q=${params.query}`,
+    headers: []
+  }).then(response => dispatch({ type: ADD_ARTICLES, payload: response.data }));
 
 export const clearArticles = () => {
   return { type: CLEAR_ARTICLES, payload: "" };
 };
 
-export const setAllTags = payload => {
-  return { type: SET_ALL_TAGS, payload };
-};
+export const getAllTags = () => dispatch =>
+  axios({
+    method: "GET",
+    url: TAGS_API_URL,
+    headers: []
+  }).then(response => dispatch({ type: GET_ALL_TAGS, payload: response.data }));
 
-export const setArticleTags = tags => {
-  return { type: SET_ARTICLE_TAGS, payload: tags };
-};
+export const getImages = () => dispatch =>
+  axios({
+    method: "GET",
+    url: IMAGES_API_URL,
+    headers: []
+  }).then(response => dispatch({ type: GET_IMAGES, payload: response.data }));
 
-export const setCategoryTags = tags => {
-  return { type: SET_CATEGORY_TAGS, payload: tags };
-};
+export const getVideos = () => dispatch =>
+  axios({
+    method: "GET",
+    url: VIDEOS_API_URL,
+    headers: []
+  }).then(response => dispatch({ type: GET_VIDEOS, payload: response.data }));
 
 export const setArticleTag = tag => {
   return { type: SET_ARTICLE_TAG, payload: tag };
@@ -46,12 +64,4 @@ export const setArticleTag = tag => {
 
 export const setCategoryTag = tag => {
   return { type: SET_CATEGORY_TAG, payload: tag };
-};
-
-export const setImages = images => {
-  return { type: SET_IMAGES, payload: images };
-};
-
-export const setVideos = videos => {
-  return { type: SET_VIDEOS, payload: videos };
 };
