@@ -20,7 +20,7 @@ const ArticleCard = ({ index, photo }) => {
     height: photo.height * 0.8
   };
 
-  let resizedUrl = photo.src && getResizedImageUrl(params);
+  let resizedUrl = photo.src && photo.src !== "" && getResizedImageUrl(params);
 
   return (
     <div key={index} className="card">
