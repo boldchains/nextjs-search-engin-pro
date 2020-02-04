@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import fetch from "isomorphic-unfetch";
-import {
-  addArticles,
-  setArticleTag
-} from "services/reducers/search/actions.js";
 
 import { makeStyles } from "@material-ui/core";
 import Card from "components/Card/Card.js";
