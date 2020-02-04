@@ -14,22 +14,7 @@ import Tags from "components/Tags/Tags.js";
 import Gallery from "react-photo-gallery";
 import styles from "assets/jss/page-sections/home-sections/articlesSectionStyle.js";
 
-import {
-  CORS_PROXY_URL,
-  ARTICLES_API_URL,
-  ARTICLES_LIMIT
-} from "utils/Consts.js";
-import { useRouter } from "next/router";
-
 const useStyles = makeStyles(styles);
-
-async function fetchArticles(params) {
-  let url = `${ARTICLES_API_URL}?l=${params.lang}&page=${params.page}&q=${params.query}`;
-
-  const response = await fetch(CORS_PROXY_URL + url);
-  const jsonResponse = await response.json();
-  return jsonResponse.articles;
-}
 
 function useFetchArticles(params) {
   useEffect(() => {
@@ -40,7 +25,7 @@ function useFetchArticles(params) {
     const handleScroll = e => {
       e.preventDefault();
       const wrappedElement = document.getElementById("gallery");
-      if (wrappedElement && isBottom(wrappedElement)) {
+      if (!params.state && wrappedElement && isBottom(wrappedElement)) {
         params.handler(params.query);
         window.removeEventListener("scroll", handleScroll);
       }
@@ -50,7 +35,7 @@ function useFetchArticles(params) {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [params.state]);
 
   return {};
 }
@@ -78,8 +63,6 @@ const useFilterTags = allTags => {
 
   const onSelect = index => {};
 
-  useEffect(() => {}, []);
-
   return {
     data: allTags.slice(0, 20),
     onSelect: onSelect
@@ -90,38 +73,32 @@ const ArticlesSection = props => {
   const classes = useStyles();
 
   const initStates = props.searchStates;
-  const page = initStates.page;
-
   const articleTags = useFilterTags(initStates.allTags);
-  const articlesFetcher = useFetchArticles({
+  const showGallery = useShowGallery(false);
+
+  useFetchArticles({
     handler: props.addArticles,
     query: {
       page: initStates.page,
       query: initStates.searchKey,
       lang: initStates.location
-    }
+    },
+    state: initStates.articles.loading
   });
 
-  const showGallery = useShowGallery(false);
-  const articlesData = initStates.articles;
-  const imageData = articlesData.map((item, index) => {
-    return {
-      key: (page * ARTICLES_LIMIT + index).toString(),
-      src: item.image && item.image.url ? item.image.url : "",
-      photo: item,
-      width: 4,
-      height: 3
-    };
-  });
+  const articlesInfo = initStates.articles;
+  const articlesData = articlesInfo.loading
+    ? [...articlesInfo.list, ...articlesInfo.preloadList]
+    : articlesInfo.list;
 
   return (
     <Card className={classes.boxedCard}>
       <Tags tags={articleTags} />
       {
         <div id="gallery">
-          {showGallery && (
+          {showGallery && articlesData.length > 0 && (
             <Gallery
-              photos={imageData}
+              photos={articlesData}
               columns={200}
               renderImage={ArticleCard}
               margin={3}
