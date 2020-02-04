@@ -40,9 +40,10 @@ export const getLocation = queryLang => dispatch =>
     .catch(err => {});
 
 export const addArticles = params => dispatch => {
+  const queryString = params.query ? params.query.trim().replace(" ", "+") : "";
   const url = `${CORS_PROXY_URL + ARTICLES_API_URL}?l=${params.lang}&page=${
     params.page
-  }&q=${params.query}`;
+  }&q=${queryString}`;
 
   const queue = axios({
     method: "GET",
