@@ -7,7 +7,8 @@ import {
   SET_CATEGORY_TAG,
   SET_ARTICLE_TAG,
   GET_IMAGES,
-  GET_VIDEOS
+  GET_VIDEOS,
+  SET_ARTICLES_LOADING
 } from "./actionTypes";
 
 import {
@@ -16,7 +17,8 @@ import {
   ARTICLES_API_URL,
   IMAGES_API_URL,
   VIDEOS_API_URL,
-  TAGS_API_URL
+  TAGS_API_URL,
+  ARTICLES_LIMIT
 } from "utils/Consts.js";
 
 export const getLocation = queryLang => dispatch =>
@@ -37,20 +39,34 @@ export const getLocation = queryLang => dispatch =>
     })
     .catch(err => {});
 
-export const addArticles = params => dispatch =>
-  axios({
+export const addArticles = params => dispatch => {
+  const url = `${CORS_PROXY_URL + ARTICLES_API_URL}?l=${params.lang}&page=${
+    params.page
+  }&q=${params.query}`;
+
+  const queue = axios({
     method: "GET",
-    url: `${CORS_PROXY_URL + ARTICLES_API_URL}?l=${params.lang}&page=${
-      params.page
-    }&q=${params.query}`,
+    url: url,
     headers: []
-  })
+  });
+
+  dispatch({ type: SET_ARTICLES_LOADING });
+  queue
     .then(response => {
       if (response.status === 200) {
-        dispatch({ type: ADD_ARTICLES, payload: response.data.articles });
+        const list = response.data.articles;
+        const articles = list.map((item, index) => ({
+          key: (params.page * ARTICLES_LIMIT + index).toString(),
+          src: item.image && item.image.url ? item.image.url : "",
+          photo: item,
+          width: 4,
+          height: 3
+        }));
+        dispatch({ type: ADD_ARTICLES, payload: articles });
       }
     })
     .catch(err => {});
+};
 
 export const clearArticles = () => {
   return { type: CLEAR_ARTICLES, payload: "" };

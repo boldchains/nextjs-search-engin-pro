@@ -6,3 +6,4 @@ export const GET_ALL_TAGS = "GET_ALL_TAGS";
 export const GET_VIDEOS = "GET_VIDEOS";
 export const SET_CATEGORY_TAG = "SET_CATEGORY_TAG";
 export const SET_ARTICLE_TAG = "SET_ARTICLE_TAG";
+export const SET_ARTICLES_LOADING = "SET_ARTICLES_LOADING";
