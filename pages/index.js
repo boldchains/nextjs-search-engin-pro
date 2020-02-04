@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter, useRouter } from "next/router";
 
 import Layout from "components/Layout/Layout.js";
-// import CategoriesSection from "page-sections/home-sections/CategoriesSection.js";
+import CategoriesSection from "page-sections/home-sections/CategoriesSection.js";
 import ArticlesSection from "page-sections/home-sections/ArticlesSection.js";
 
 import {
@@ -25,11 +25,11 @@ const Index = props => {
         l: query.l ? query.l : location
       }
     });
-  }, []);
+  }, [location]);
 
   return (
     <Layout>
-      {/* <CategoriesSection /> */}
+      <CategoriesSection />
       <ArticlesSection {...props} />
     </Layout>
   );
@@ -50,9 +50,9 @@ Index.getInitialProps = async function({ store, pathname, query }) {
   await store.dispatch(clearArticles());
   await store.dispatch(
     addArticles({
-      lang: "en",
-      page: 1,
-      query: ""
+      lang: query.l,
+      page: 0,
+      query: query.q ? query.q : ""
     })
   );
 };
