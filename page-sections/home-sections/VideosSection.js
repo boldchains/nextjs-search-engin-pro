@@ -7,7 +7,7 @@ import Card from "components/Card/Card.js";
 import VideoCard from "components/VideoCard/VideoCard.js";
 
 // redux actions
-import { setVideos } from "services/reducers/search/actions.js";
+import { getVideos } from "services/reducers/search/actions.js";
 
 import styles from "assets/jss/page-sections/home-sections/videosSectionStyle.js";
 import { VIDEOS_API_URL } from "utils/Consts.js";
@@ -40,7 +40,7 @@ function useFetchVideos() {
     const fetchedData = []; //await fetchVideos(params);
     setIsFetching(false);
 
-    dispatch(setVideos(fetchedData));
+    dispatch(getVideos(fetchedData));
   }
 
   useEffect(() => {

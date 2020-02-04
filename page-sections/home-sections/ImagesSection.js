@@ -7,7 +7,7 @@ import Slider from "react-slick";
 import Card from "components/Card/Card.js";
 import ImageCard from "components/ImageCard/ImageCard.js";
 
-import { setImages } from "services/reducers/search/actions.js";
+import { getImages } from "services/reducers/search/actions.js";
 
 import styles from "assets/jss/page-sections/home-sections/imagesSectionStyle.js";
 
@@ -32,7 +32,7 @@ const useFetchImages = () => {
 
     if (findTags && findTags.list_tags) {
       const tagImages = findTags.list_tags.slice(0, 20);
-      dispatch(setImages(tagImages));
+      dispatch(getImages(tagImages));
     }
   };
 

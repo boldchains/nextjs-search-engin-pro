@@ -6,10 +6,7 @@ import { makeStyles } from "@material-ui/core";
 import Tags from "components/Tags/Tags.js";
 import ImagesSection from "./ImagesSection.js";
 import VideosSection from "./VideosSection.js";
-import {
-  setCategoryTags,
-  setCategoryTag
-} from "services/reducers/search/actions.js";
+import { setCategoryTag } from "services/reducers/search/actions.js";
 
 import styles from "assets/jss/page-sections/home-sections/categoriesSectionStyle.js";
 
@@ -62,8 +59,8 @@ const CategoriesSection = () => {
 
   return (
     <div className={classes.container}>
-      <Tags tags={categoryTags} />
-      <VideosSection />
+      {/* <Tags tags={categoryTags} /> */}
+      {/* <VideosSection /> */}
       <ImagesSection />
     </div>
   );
