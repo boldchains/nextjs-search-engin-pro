@@ -1,4 +1,4 @@
-import axios from "axios";
+import fetch from "isomorphic-unfetch";
 import {
   GET_LOCATION,
   ADD_ARTICLES,
@@ -12,7 +12,6 @@ import {
 } from "./actionTypes";
 
 import {
-  LOCATION_DETECT_API,
   CORS_PROXY_URL,
   ARTICLES_API_URL,
   IMAGES_API_URL,
@@ -21,81 +20,63 @@ import {
   ARTICLES_LIMIT
 } from "utils/Consts.js";
 
-export const getLocation = queryLang => dispatch =>
-  axios({
-    method: "GET",
-    url: LOCATION_DETECT_API,
-    headers: []
-  })
-    .then(response => {
-      if (response.status === 200) {
-        const { countryCode } = response.data;
-        const location = queryLang ? queryLang : countryCode.toLowerCase();
-        dispatch({
-          type: GET_LOCATION,
-          payload: location
-        });
-      }
-    })
-    .catch(err => {});
+export const getLocation = queryLang => async dispatch => {
+  dispatch({ type: GET_LOCATION, payload: queryLang });
+};
 
-export const addArticles = params => dispatch => {
+export const addArticles = params => async dispatch => {
   const queryString = params.query ? params.query.trim().replace(" ", "+") : "";
-  const url = `${CORS_PROXY_URL + ARTICLES_API_URL}?l=${params.lang}&page=${
-    params.page
-  }&q=${queryString}`;
-
-  const queue = axios({
-    method: "GET",
-    url: url,
-    headers: []
-  });
+  const url = `${CORS_PROXY_URL + ARTICLES_API_URL}?l=${
+    params.lang ? params.lang : "en"
+  }&page=${params.page}&q=${queryString}`;
 
   dispatch({ type: SET_ARTICLES_LOADING });
-  queue
-    .then(response => {
-      if (response.status === 200) {
-        const list = response.data.articles;
-        const articles = list.map((item, index) => ({
-          key: (params.page * ARTICLES_LIMIT + index).toString(),
-          src: item.image && item.image.url ? item.image.url : "",
-          photo: item,
-          width: 4,
-          height: 3
-        }));
-        dispatch({ type: ADD_ARTICLES, payload: articles });
-      }
-    })
-    .catch(err => {});
+
+  try {
+    const response = await fetch(url);
+    const jsonResp = await response.json();
+
+    const articles =
+      jsonResp.articles &&
+      jsonResp.articles.map((item, index) => ({
+        key: (params.page * ARTICLES_LIMIT + index).toString(),
+        src: item.image && item.image.url ? item.image.url : "",
+        photo: item,
+        width: 4,
+        height: 3
+      }));
+    dispatch({ type: ADD_ARTICLES, payload: articles });
+  } catch (err) {}
 };
 
 export const clearArticles = () => {
   return { type: CLEAR_ARTICLES, payload: "" };
 };
 
-export const getAllTags = () => dispatch =>
-  axios
-    .get(CORS_PROXY_URL + TAGS_API_URL)
-    .then(response => {
-      if (response.status === 200) {
-        dispatch({ type: GET_ALL_TAGS, payload: response.data.listtags });
-      }
-    })
-    .catch(err => {});
+export const getAllTags = () => async dispatch => {
+  try {
+    const response = await fetch(CORS_PROXY_URL + TAGS_API_URL);
+    const jsonResp = await response.json();
 
-export const getImages = () => dispatch =>
-  axios({
-    method: "GET",
-    url: IMAGES_API_URL,
-    headers: []
-  }).then(response => dispatch({ type: GET_IMAGES, payload: response.data }));
+    dispatch({ type: GET_ALL_TAGS, payload: jsonResp.listtags });
+  } catch (err) {}
+};
 
-export const getVideos = () => dispatch =>
-  axios({
-    method: "GET",
-    url: VIDEOS_API_URL,
-    headers: []
-  }).then(response => dispatch({ type: GET_VIDEOS, payload: response.data }));
+export const getImages = () => async dispatch => {
+  try {
+    const response = await fetch(CORS_PROXY_URL + IMAGES_API_URL);
+    const jsonResp = await response.json();
+    dispatch({ type: GET_IMAGES, payload: jsonResp.alluserphotos });
+  } catch (err) {}
+};
+
+export const getVideos = () => async dispatch => {
+  try {
+    const response = await fetch(VIDEOS_API_URL);
+    const jsonResp = await response.json();
+    dispatch({ type: GET_VIDEOS, payload: jsonResp });
+  } catch (err) {}
+};
 
 export const setArticleTag = tag => {
   return { type: SET_ARTICLE_TAG, payload: tag };
