@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 
 import { makeStyles } from "@material-ui/core";
 import Card from "components/Card/Card.js";
@@ -46,16 +45,6 @@ function useShowGallery(initialState) {
 }
 
 const useFilterTags = allTags => {
-  const tags = useSelector(state => state.searchStates.articleTags);
-  const dispatch = useDispatch();
-
-  const searchHandler = () => {
-    const filteredList = allTags.filter(function(item) {
-      return item._id.toLowerCase().indexOf(searchKey.toLowerCase()) >= 0;
-    });
-    const tagList = allTags ? filteredList : [];
-  };
-
   const onSelect = index => {};
 
   return {
@@ -70,13 +59,15 @@ const ArticlesSection = props => {
   const initStates = props.searchStates;
   const articleTags = useFilterTags(initStates.allTags);
   const showGallery = useShowGallery(false);
+  const query = props.router.query;
+  const lang = query.l ? query.l : "en";
 
   useFetchArticles({
     handler: props.addArticles,
     query: {
       page: initStates.page,
       query: initStates.searchKey,
-      lang: initStates.location
+      lang: lang
     },
     state: initStates.articles.loading
   });
