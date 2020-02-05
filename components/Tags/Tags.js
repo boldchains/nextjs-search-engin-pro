@@ -26,30 +26,35 @@ const PrevArrow = props => {
 
 const Tags = props => {
   const classes = useStyles();
-  const tags = props.tags.data;
+  const tags = props.tags.data ? props.tags.data : props.tags;
 
   const onSelectTag = (e, index) => {
-    props.tags.onSelect(index);
+    props.tags.onSelect && props.tags.onSelect(index);
   };
 
   const buttons =
     tags &&
-    tags.map((tag, index) => (
-      <div className={classes.button} key={tag._id}>
-        <Button
-          size="sm"
-          color={tag.selected ? "primary" : "white"}
-          key={index}
-          onClick={event => onSelectTag(event, index)}
-          round
-        >
-          <div className={classes.flexDiv}>
-            {tag.logo && <img className={classes.buttonIcon} src={tag.logo} />}
-            {tag._id}
-          </div>
-        </Button>
-      </div>
-    ));
+    tags.map((tag, index) => {
+      const tagId = tag._id ? tag._id : tag.tag;
+      return (
+        <div className={classes.button} key={tagId}>
+          <Button
+            size="sm"
+            color={tag.selected ? "primary" : "white"}
+            key={index}
+            onClick={event => onSelectTag(event, index)}
+            round
+          >
+            <div className={classes.flexDiv}>
+              {tag.logo && (
+                <img className={classes.buttonIcon} src={tag.logo} />
+              )}
+              {tagId}
+            </div>
+          </Button>
+        </div>
+      );
+    });
 
   const settings = {
     className: "slider variable-width",
