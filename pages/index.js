@@ -7,10 +7,10 @@ import CategoriesSection from "page-sections/home-sections/CategoriesSection.js"
 import ArticlesSection from "page-sections/home-sections/ArticlesSection.js";
 
 import {
-  getLocation,
   getAllTags,
   clearArticles,
-  addArticles
+  addArticles,
+  getImages
 } from "services/reducers/search/actions.js";
 
 const Index = props => {
@@ -18,18 +18,20 @@ const Index = props => {
   const { location } = props.searchStates;
   const router = useRouter();
   useEffect(() => {
+    const lang = navigator.language.slice(0, 2);
+    const language = query.l ? query.l : lang;
     router.push({
       pathname: "/",
       query: {
         ...query,
-        l: query.l ? query.l : location
+        l: language
       }
     });
   }, [location]);
 
   return (
     <Layout>
-      <CategoriesSection />
+      <CategoriesSection {...props} />
       <ArticlesSection {...props} />
     </Layout>
   );
@@ -39,27 +41,26 @@ Index.getInitialProps = async function({ store, pathname, query }) {
   if (pathname !== "/") {
     return {};
   }
-
-  // fetch location data
-  await store.dispatch(getLocation(query.l));
-
   // fetch all tag list
-  await store.dispatch(getAllTags());
+  store.dispatch(getAllTags());
 
   // celar artilces action
-  await store.dispatch(clearArticles());
-  await store.dispatch(
+  store.dispatch(clearArticles());
+
+  // get images
+  store.dispatch(getImages());
+
+  store.dispatch(
     addArticles({
       lang: query.l,
-      page: 0,
-      query: query.q ? query.q : ""
+      query: query.q ? query.q : "",
+      page: 0
     })
   );
 };
 
 export default connect(state => state, {
-  getLocation,
-  getAllTags,
   clearArticles,
-  addArticles
+  addArticles,
+  getImages
 })(withRouter(Index));
