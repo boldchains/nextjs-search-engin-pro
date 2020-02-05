@@ -8,14 +8,22 @@ const useStyles = makeStyles(styles);
 
 const ImageCard = props => {
   const classes = useStyles();
-  const imageUrl = PHOTO_STATIC_URL + props.info.imageid + ".jpg";
+  const imageUrl = PHOTO_STATIC_URL + props.images.publicid + ".jpg";
 
-  return props.info.imageid ? (
+  const maxHeight = 142;
+  let width,
+    height = 0;
+  if (props.images.imageheight != maxHeight) {
+    const rate = maxHeight / props.images.imageheight;
+    width = props.images.imagewidth * rate;
+    height = maxHeight;
+  }
+  return props.images.publicid ? (
     <img
       className={classes.image}
       src={imageUrl}
-      height={props.info.height}
-      width={props.info.width}
+      height={height}
+      width={width}
     />
   ) : (
     <div></div>
