@@ -5,6 +5,7 @@ import { withRouter, useRouter } from "next/router";
 import Layout from "components/Layout/Layout.js";
 import CategoriesSection from "page-sections/home-sections/CategoriesSection.js";
 import ArticlesSection from "page-sections/home-sections/ArticlesSection.js";
+import AdvanceSearchForm from "page-sections/home-sections/AdvanceSearchForm.js";
 
 import {
   getAllTags,
@@ -34,6 +35,7 @@ const Index = props => {
 
   return (
     <Layout>
+      <AdvanceSearchForm />
       <CategoriesSection {...props} />
       <ArticlesSection {...props} />
     </Layout>
