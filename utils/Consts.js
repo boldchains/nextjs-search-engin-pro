@@ -5,7 +5,7 @@ export const LOCATION_DETECT_API = "https://extreme-ip-lookup.com/json/";
 export const TAGS_API_URL = "https://managerimages.vavel.com/api/tag/listtags";
 export const VIDEOS_API_URL = "https://www.googleapis.com/youtube/v3/search";
 export const IMAGES_API_URL =
-  "https://managerimages.vavel.com/api/album/getlastphotos?country=russia&limit=50&page=0&ts=1580886814748";
+  "https://managerimages.vavel.com/api/album/getlastphotos";
 export const CORS_PROXY_URL = "https://cors-anywhere.herokuapp.com/";
 export const ARTICLES_API_URL = "https://search.vavel.com/api/articles";
 export const SEARCH_KEYWORD_API = "https://search.vavel.com/api/autocomplete";
