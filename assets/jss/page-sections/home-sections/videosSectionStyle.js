@@ -11,6 +11,32 @@ const videosSectionStyles = {
     fontSize: "1.5rem",
     marginTop: "10px",
     marginLeft: "20px"
+  },
+  nextArrow: {
+    top: "50%",
+    transform: "translateY(-50%)",
+    zIndex: 2,
+    position: "absolute",
+    marginRight: "20px",
+    "&:before": {
+      color: "rgba(156, 39, 176, 0.9)"
+    },
+    "&:current": {
+      color: "rgba(156, 39, 176, 0.9)"
+    }
+  },
+  prevArrow: {
+    top: "50%",
+    transform: "translateY(-50%)",
+    zIndex: 2,
+    position: "absolute",
+    marginLeft: "20px",
+    "&:before": {
+      color: "rgba(156, 39, 176, 0.9)"
+    },
+    "&:current": {
+      color: "rgba(156, 39, 176, 0.9)"
+    }
   }
 };
 

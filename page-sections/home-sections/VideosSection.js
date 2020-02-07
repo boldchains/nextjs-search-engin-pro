@@ -9,10 +9,26 @@ import styles from "assets/jss/page-sections/home-sections/videosSectionStyle.js
 
 const useStyles = makeStyles(styles);
 
+const NextArrow = props => {
+  const classes = useStyles();
+  const { className, onClick } = props;
+  return (
+    <div className={className + " " + classes.nextArrow} onClick={onClick} />
+  );
+};
+
+const PrevArrow = props => {
+  const classes = useStyles();
+  const { className, onClick } = props;
+
+  return (
+    <div className={className + " " + classes.prevArrow} onClick={onClick} />
+  );
+};
+
 const VideosSection = props => {
   const classes = useStyles();
   const videos = props.videos;
-  console.log(videos);
 
   const videoCards =
     videos &&
@@ -29,7 +45,9 @@ const VideosSection = props => {
     slidesToShow: 1,
     slidesToScroll: 1,
     variableWidth: true,
-    adaptiveHeight: true
+    adaptiveHeight: true,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />
   };
 
   return (
