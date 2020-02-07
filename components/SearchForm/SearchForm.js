@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { useDispatch } from "react-redux";
 
 import styles from "assets/jss/components/searchFormStyle.js";
 
@@ -24,7 +23,6 @@ function useSearchFormInput(initialValue) {
 
 export default function SearchForm() {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const router = useRouter();
   const { pathname, query } = router;
   const input = useSearchFormInput(query.q ? query.q : "");

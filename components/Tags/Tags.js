@@ -26,7 +26,7 @@ const PrevArrow = props => {
 
 const Tags = props => {
   const classes = useStyles();
-  const tags = props.tags.data ? props.tags.data : props.tags;
+  const tags = props.tags.data;
 
   const onSelectTag = (e, index) => {
     props.tags.onSelect && props.tags.onSelect(index);
@@ -40,7 +40,7 @@ const Tags = props => {
         <div className={classes.button} key={tagId}>
           <Button
             size="sm"
-            color={tag.selected ? "primary" : "white"}
+            color={tagId == props.tags.selectedTag ? "primary" : "white"}
             key={index}
             onClick={event => onSelectTag(event, index)}
             round

@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useRouter } from "next/router";
 import { makeStyles } from "@material-ui/core";
 
 import Tags from "components/Tags/Tags.js";
@@ -81,12 +81,38 @@ const getTags = function({ list, query }) {
   return array;
 };
 
+const useTags = params => {
+  const router = useRouter();
+  const tagList = getTags(params);
+  const { pathname, query } = router;
+
+  const onSelect = index => {
+    const selectedTag = tagList && tagList.length > 0 ? tagList[index] : "";
+
+    if (pathname == "/") {
+      router.push({
+        pathname: "/",
+        query: {
+          ...query,
+          ctag: selectedTag.tag
+        }
+      });
+    }
+  };
+
+  return {
+    data: tagList,
+    onSelect: onSelect,
+    selectedTag: query.ctag
+  };
+};
+
 const CategoriesSection = props => {
   const classes = useStyles();
 
   const lastPhotos = props.searchStates.images;
   const query = props.router.query;
-  const tags = getTags({ list: lastPhotos, query });
+  const tags = useTags({ list: lastPhotos, query });
 
   return (
     <div className={classes.container}>
