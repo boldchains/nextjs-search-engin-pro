@@ -43,7 +43,7 @@ const VideoCard = props => {
         {isLoaded && thumbnail.url ? (
           <img src={thumbnail.url} style={{ objectFit: "cover" }} />
         ) : (
-          <Skeleton variant="rect" width={"100%"} height={"120px"} />
+          <Skeleton variant="rect" width={"200px"} height={"120px"} />
         )}
         <div className={classes.description}>
           {isLoaded && props.info.snippet.title ? (

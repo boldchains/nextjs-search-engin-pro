@@ -70,15 +70,20 @@ export const getImages = params => async dispatch => {
     const response = await fetch(CORS_PROXY_URL + url);
     const jsonResp = await response.json();
     dispatch({ type: GET_IMAGES, payload: jsonResp.alluserphotos });
-    console.log(jsonResp.alluserphotos);
   } catch (err) {}
 };
 
-export const getVideos = () => async dispatch => {
+export const getVideos = params => async dispatch => {
+  const query = params.ctag
+    ? params.ctag
+    : "" + " " + params.query
+    ? params.query
+    : "";
+  const url = `${VIDEOS_API_URL}?part=snippet&q=${query}&maxResults=30&key=${process.env.apiKey}`;
   try {
-    const response = await fetch(VIDEOS_API_URL);
+    const response = await fetch(url);
     const jsonResp = await response.json();
-    dispatch({ type: GET_VIDEOS, payload: jsonResp });
+    dispatch({ type: GET_VIDEOS, payload: jsonResp.items });
   } catch (err) {}
 };
 

@@ -1,67 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
 
 import { makeStyles } from "@material-ui/core";
 import Slider from "react-slick";
 import Card from "components/Card/Card.js";
 import VideoCard from "components/VideoCard/VideoCard.js";
 
-// redux actions
-import { getVideos } from "services/reducers/search/actions.js";
-
 import styles from "assets/jss/page-sections/home-sections/videosSectionStyle.js";
-import { VIDEOS_API_URL } from "utils/Consts.js";
 
 const useStyles = makeStyles(styles);
 
-async function fetchVideos(params) {
-  const url = `${VIDEOS_API_URL}?part=snippet&q=${params.query}&maxResults=${params.count}&key=${process.env.apiKey}`;
-
-  const response = await fetch(url);
-  const jsonResponse = await response.json();
-  return jsonResponse.items;
-}
-
-function useFetchVideos() {
-  const videos = useSelector(state => state.searchStates.videos);
-  const searchKey = useSelector(state => state.searchStates.searchKey);
-  const selectedCTag = useSelector(state => state.searchStates.selectedCTag);
-  const [isFetching, setIsFetching] = useState(false);
-
-  const dispatch = useDispatch();
-
-  async function fetchVideosHandler() {
-    const params = {
-      query: selectedCTag !== "" ? selectedCTag : searchKey,
-      count: 20
-    };
-
-    setIsFetching(true);
-    const fetchedData = []; //await fetchVideos(params);
-    setIsFetching(false);
-
-    dispatch(getVideos(fetchedData));
-  }
-
-  useEffect(() => {
-    fetchVideosHandler();
-  }, [searchKey, selectedCTag]);
-
-  return {
-    items: videos,
-    isLoading: isFetching
-  };
-}
-
-const VideosSection = () => {
+const VideosSection = props => {
   const classes = useStyles();
-  const videos = useFetchVideos();
+  const videos = props.videos;
+  console.log(videos);
 
   const videoCards =
-    videos.items &&
-    videos.items.length !== 0 &&
-    videos.items.map((video, index) => (
-      <VideoCard info={video} key={index} isLoaded={!videos.isLoading} />
+    videos &&
+    videos !== 0 &&
+    videos.map((video, index) => (
+      <VideoCard info={video} key={index} isLoaded={videos} />
     ));
 
   const settings = {

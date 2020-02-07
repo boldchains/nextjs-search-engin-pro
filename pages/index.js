@@ -10,7 +10,8 @@ import {
   getAllTags,
   clearArticles,
   addArticles,
-  getImages
+  getImages,
+  getVideos
 } from "services/reducers/search/actions.js";
 
 const Index = props => {
@@ -57,6 +58,9 @@ Index.getInitialProps = async function({ store, pathname, query }) {
 
   // get images
   store.dispatch(getImages(params));
+
+  // get Videos
+  store.dispatch(getVideos(params));
 
   // get initial articles
   store.dispatch(addArticles(params));
