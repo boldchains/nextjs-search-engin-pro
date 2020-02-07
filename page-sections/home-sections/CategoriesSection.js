@@ -78,6 +78,9 @@ const getTags = function({ list, query }) {
     }
   }
 
+  array.unshift({
+    tag: "All"
+  });
   return array;
 };
 
@@ -89,12 +92,12 @@ const useTags = params => {
   const onSelect = index => {
     const selectedTag = tagList && tagList.length > 0 ? tagList[index] : "";
 
-    if (pathname == "/") {
+    if (selectedTag && selectedTag.tag !== query.ctag && pathname == "/") {
       router.push({
         pathname: "/",
         query: {
           ...query,
-          ctag: selectedTag.tag
+          ctag: selectedTag.tag.replace("All", "")
         }
       });
     }

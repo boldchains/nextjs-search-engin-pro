@@ -40,7 +40,12 @@ const Tags = props => {
         <div className={classes.button} key={tagId}>
           <Button
             size="sm"
-            color={tagId == props.tags.selectedTag ? "primary" : "white"}
+            color={
+              tagId === props.tags.selectedTag ||
+              (tagId === "All" && !props.tags.selectedTag)
+                ? "primary"
+                : "white"
+            }
             key={index}
             onClick={event => onSelectTag(event, index)}
             round
