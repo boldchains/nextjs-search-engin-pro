@@ -41,6 +41,14 @@ Index.getInitialProps = async function({ store, pathname, query }) {
   if (pathname !== "/") {
     return {};
   }
+
+  const queryString = query.q ? query.q.trim().replace(" ", "+") : "";
+  const params = {
+    lang: query.l,
+    query: queryString,
+    ctag: query.ctag,
+    page: 0
+  };
   // fetch all tag list
   store.dispatch(getAllTags());
 
@@ -48,15 +56,10 @@ Index.getInitialProps = async function({ store, pathname, query }) {
   store.dispatch(clearArticles());
 
   // get images
-  store.dispatch(getImages());
+  store.dispatch(getImages(params));
 
-  store.dispatch(
-    addArticles({
-      lang: query.l,
-      query: query.q ? query.q : "",
-      page: 0
-    })
-  );
+  // get initial articles
+  store.dispatch(addArticles(params));
 };
 
 export default connect(state => state, {

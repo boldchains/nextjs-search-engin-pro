@@ -25,10 +25,9 @@ export const getLocation = queryLang => async dispatch => {
 };
 
 export const addArticles = params => async dispatch => {
-  const queryString = params.query ? params.query.trim().replace(" ", "+") : "";
   const url = `${CORS_PROXY_URL + ARTICLES_API_URL}?l=${
     params.lang ? params.lang : "en"
-  }&page=${params.page}&q=${queryString}`;
+  }&page=${params.page}&q=${params.query}`;
 
   dispatch({ type: SET_ARTICLES_LOADING });
 
@@ -62,11 +61,16 @@ export const getAllTags = () => async dispatch => {
   } catch (err) {}
 };
 
-export const getImages = () => async dispatch => {
+export const getImages = params => async dispatch => {
+  const ts = Date.now();
+  const url = `${IMAGES_API_URL}?l=${params.lang ? params.lang : "en"}&page=${
+    params.page
+  }&q=${params.query}&ts=${ts}${params.ctag && "&tag=" + params.ctag}`;
   try {
-    const response = await fetch(CORS_PROXY_URL + IMAGES_API_URL);
+    const response = await fetch(CORS_PROXY_URL + url);
     const jsonResp = await response.json();
     dispatch({ type: GET_IMAGES, payload: jsonResp.alluserphotos });
+    console.log(jsonResp.alluserphotos);
   } catch (err) {}
 };
 
