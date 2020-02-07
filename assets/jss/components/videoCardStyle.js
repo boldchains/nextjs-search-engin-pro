@@ -1,4 +1,4 @@
-import { container } from "assets/jss/material-kit.js";
+import buttonStyle from "assets/jss/components/buttonStyle.js";
 
 const videoCardStyle = {
   container: {

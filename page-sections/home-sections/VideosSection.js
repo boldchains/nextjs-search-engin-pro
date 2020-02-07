@@ -30,12 +30,21 @@ const VideosSection = props => {
   const classes = useStyles();
   const videos = props.videos;
 
+  const onSelect = index => {};
+
   const videoCards =
     videos &&
     videos !== 0 &&
-    videos.map((video, index) => (
-      <VideoCard info={video} key={index} isLoaded={videos} />
-    ));
+    videos.map((video, index) => {
+      const videoProps = {
+        index: index,
+        key: index,
+        onSelect: onSelect,
+        info: video,
+        isLoaded: true
+      };
+      return <VideoCard {...videoProps} />;
+    });
 
   const settings = {
     dots: false,
