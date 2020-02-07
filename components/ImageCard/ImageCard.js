@@ -18,13 +18,17 @@ const ImageCard = props => {
     width = props.images.imagewidth * rate;
     height = maxHeight;
   }
+
+  const linkUrl = `https://managerimages.vavel.com/details/${props._id}/${props.images.publicid}`;
   return props.images.publicid ? (
-    <img
-      className={classes.image}
-      src={imageUrl}
-      height={height}
-      width={width}
-    />
+    <a href={linkUrl} target="_blank">
+      <img
+        className={classes.image}
+        src={imageUrl}
+        height={height}
+        width={width}
+      />
+    </a>
   ) : (
     <div></div>
   );
