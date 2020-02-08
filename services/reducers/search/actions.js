@@ -8,7 +8,10 @@ import {
   SET_ARTICLE_TAG,
   GET_IMAGES,
   GET_VIDEOS,
-  SET_ARTICLES_LOADING
+  SET_ARTICLES_LOADING,
+  GET_VIDEO_DETAIL,
+  RESET_VIDEO_DETAIL,
+  SET_VIDEO_LOADING
 } from "./actionTypes";
 
 import {
@@ -17,8 +20,12 @@ import {
   IMAGES_API_URL,
   VIDEOS_API_URL,
   TAGS_API_URL,
-  ARTICLES_LIMIT
+  ARTICLES_LIMIT,
+  VIDEO_DETAIL_URL
 } from "utils/Consts.js";
+
+import testVideosResponse from "./videos.js";
+import testDetail from "./detail.js";
 
 export const getLocation = queryLang => async dispatch => {
   dispatch({ type: GET_LOCATION, payload: queryLang });
@@ -79,12 +86,32 @@ export const getVideos = params => async dispatch => {
     : "" + " " + params.query
     ? params.query
     : "";
-  const url = `${VIDEOS_API_URL}?part=snippet&q=${query}&maxResults=30&key=${process.env.apiKey}`;
   try {
+    const url = `${VIDEOS_API_URL}?part=snippet&q=${query}&maxResults=30&key=${process.env.apiKey}`;
+
     const response = await fetch(url);
     const jsonResp = await response.json();
     dispatch({ type: GET_VIDEOS, payload: jsonResp.items });
+    // dispatch({ type: GET_VIDEOS, payload: testVideosResponse.items });
   } catch (err) {}
+};
+
+export const getVideoDetail = params => async dispatch => {
+  const url = `${VIDEO_DETAIL_URL}?id=${params.id}&part=contentDetails,snippet,statistics&key=${process.env.apiKey}`;
+  try {
+    dispatch({ type: SET_VIDEO_LOADING });
+    const rep = await fetch(url);
+    const jsonResp = await rep.json();
+    dispatch({
+      type: GET_VIDEO_DETAIL,
+      payload: jsonResp.items && jsonResp.items[0]
+      // payload: testDetail.items && testDetail.items[0]
+    });
+  } catch (err) {}
+};
+
+export const resetVideoDetail = () => {
+  return { type: RESET_VIDEO_DETAIL };
 };
 
 export const setArticleTag = tag => {

@@ -7,7 +7,10 @@ import {
   GET_ALL_TAGS,
   SET_CATEGORY_TAG,
   SET_ARTICLE_TAG,
-  SET_ARTICLES_LOADING
+  SET_ARTICLES_LOADING,
+  GET_VIDEO_DETAIL,
+  RESET_VIDEO_DETAIL,
+  SET_VIDEO_LOADING
 } from "./actionTypes";
 
 const defaultTag = { _id: "All", selected: true };
@@ -25,6 +28,10 @@ const initialState = {
     loading: false
   },
   videos: [],
+  video: {
+    detail: {},
+    isLoading: false
+  },
   images: [],
   allTags: [],
   articleTags: [defaultTag],
@@ -60,6 +67,30 @@ export default function(state = initialState, { type, payload }) {
       return {
         ...state,
         videos: payload
+      };
+    case GET_VIDEO_DETAIL:
+      return {
+        ...state,
+        video: {
+          ...state.video,
+          detail: payload
+        }
+      };
+    case RESET_VIDEO_DETAIL:
+      return {
+        ...state,
+        video: {
+          detail: {},
+          isLoading: false
+        }
+      };
+    case SET_VIDEO_LOADING:
+      return {
+        ...state,
+        video: {
+          ...state.video,
+          isLoading: true
+        }
       };
     case GET_IMAGES:
       return {

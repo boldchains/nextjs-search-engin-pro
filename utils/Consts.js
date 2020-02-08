@@ -4,6 +4,7 @@ export const ARTICLES_LIMIT = 20;
 export const LOCATION_DETECT_API = "https://extreme-ip-lookup.com/json/";
 export const TAGS_API_URL = "https://managerimages.vavel.com/api/tag/listtags";
 export const VIDEOS_API_URL = "https://www.googleapis.com/youtube/v3/search";
+export const VIDEO_DETAIL_URL = "https://www.googleapis.com/youtube/v3/videos";
 export const IMAGES_API_URL =
   "https://managerimages.vavel.com/api/album/getlastphotos";
 export const CORS_PROXY_URL = "https://cors-anywhere.herokuapp.com/";
