@@ -35,7 +35,8 @@ const videoCardStyle = {
     }
   },
   thumbnail: {
-    textAlign: "center"
+    textAlign: "center",
+    maxHeight: "180px"
   },
   title: {
     fontSize: "1rem",
