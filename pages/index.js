@@ -11,7 +11,9 @@ import {
   clearArticles,
   addArticles,
   getImages,
-  getVideos
+  getVideos,
+  getVideoDetail,
+  resetVideoDetail
 } from "services/reducers/search/actions.js";
 
 const Index = props => {
@@ -69,5 +71,6 @@ Index.getInitialProps = async function({ store, pathname, query }) {
 export default connect(state => state, {
   clearArticles,
   addArticles,
-  getImages
+  getVideoDetail,
+  resetVideoDetail
 })(withRouter(Index));

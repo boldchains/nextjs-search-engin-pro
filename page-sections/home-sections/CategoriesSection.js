@@ -114,14 +114,13 @@ const CategoriesSection = props => {
   const classes = useStyles();
 
   const lastPhotos = props.searchStates.images;
-  const videos = props.searchStates.videos;
   const query = props.router.query;
   const tags = useTags({ list: lastPhotos, query });
 
   return (
     <div className={classes.container}>
       <Tags tags={tags} />
-      <VideosSection videos={videos} />
+      <VideosSection {...props} />
       <ImagesSection images={lastPhotos} />
     </div>
   );
