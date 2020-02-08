@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core";
 import Slider from "react-slick";
 import Card from "components/Card/Card.js";
 import VideoCard from "components/VideoCard/VideoCard.js";
+import VideoDetail from "./VideoDetail.js";
 
 import styles from "assets/jss/page-sections/home-sections/videosSectionStyle.js";
 
@@ -28,9 +29,17 @@ const PrevArrow = props => {
 
 const VideosSection = props => {
   const classes = useStyles();
-  const videos = props.videos;
+  const videos = props.searchStates.videos;
+  const videoDetail = props.searchStates.video;
 
-  const onSelect = index => {};
+  const onSelect = index => {
+    const selectedVideo = videos[index];
+    props.getVideoDetail({ id: selectedVideo.id.videoId });
+  };
+
+  const onDismiss = () => {
+    props.resetVideoDetail();
+  };
 
   const videoCards =
     videos &&
@@ -68,6 +77,9 @@ const VideosSection = props => {
             <Slider {...settings}>{videoCards}</Slider>
           </div>
         </Card>
+      )}
+      {videoDetail.detail && (
+        <VideoDetail {...videoDetail} onDismiss={onDismiss} />
       )}
     </div>
   );
