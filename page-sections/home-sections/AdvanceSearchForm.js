@@ -1,7 +1,7 @@
 import React from "react";
 
 import { makeStyles } from "@material-ui/core";
-import styles from "assets/jss/page-sections/home-sections/videoDetailStyle.js";
+import styles from "assets/jss/page-sections/home-sections/advanceSearchFormStyle.js";
 const useStyles = makeStyles(styles);
 
 const AdvanceSearchForm = props => {
