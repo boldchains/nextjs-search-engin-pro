@@ -1,6 +1,6 @@
 const searchFormStyle = theme => ({
   vCenterForm: {
-    marginBottom: "10px",
+    marginBottom: "0px",
     marginRight: "20px"
   },
   inputGroup: {
@@ -24,10 +24,19 @@ const searchFormStyle = theme => ({
     fontWeight: "700",
     lineHeight: "1.5",
     backgroundColor: "rgba(255, 255, 255, 0.3)",
-    borderRadius: "30px 0px 0px 30px",
+    borderRadius: "30px 0px 0px 30px"
+  },
+  advanceSearch: {
+    color: "white",
+    borderRadius: "30px",
+    padding: "0px"
+  },
+  advanceSearchIcon: {
+    width: "40px",
+    height: "40px"
   },
   inputGroupText: {
-    borderRadius: "0px 30px 30px 0px",
+    borderRadius: "0px 30px 30px 0px"
   },
   searchButtonIcon: {
     fontSize: "32px",
