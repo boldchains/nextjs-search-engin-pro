@@ -14,7 +14,8 @@ import {
   getImages,
   getVideos,
   getVideoDetail,
-  resetVideoDetail
+  resetVideoDetail,
+  setShowAdvancedSearch
 } from "services/reducers/search/actions.js";
 
 const Index = props => {
@@ -34,7 +35,7 @@ const Index = props => {
   }, [location]);
 
   return (
-    <Layout>
+    <Layout {...props}>
       <AdvanceSearchForm />
       <CategoriesSection {...props} />
       <ArticlesSection {...props} />
@@ -74,5 +75,6 @@ export default connect(state => state, {
   clearArticles,
   addArticles,
   getVideoDetail,
-  resetVideoDetail
+  resetVideoDetail,
+  setShowAdvancedSearch
 })(withRouter(Index));
