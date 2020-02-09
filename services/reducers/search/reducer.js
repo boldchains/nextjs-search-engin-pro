@@ -10,7 +10,8 @@ import {
   SET_ARTICLES_LOADING,
   GET_VIDEO_DETAIL,
   RESET_VIDEO_DETAIL,
-  SET_VIDEO_LOADING
+  SET_VIDEO_LOADING,
+  SET_SHOW_ADVACNED_SEARCH
 } from "./actionTypes";
 
 const defaultTag = { _id: "All", selected: true };
@@ -38,6 +39,7 @@ const initialState = {
   categoryTags: [defaultTag],
   selectedCTag: "",
   selectedATag: "",
+  isShowAdcanceSearch: false,
   page: 0
 };
 
@@ -47,6 +49,11 @@ export default function(state = initialState, { type, payload }) {
       return {
         ...state,
         location: payload
+      };
+    case SET_SHOW_ADVACNED_SEARCH:
+      return {
+        ...state,
+        isShowAdcanceSearch: payload
       };
     case SET_ARTICLE_TAG:
       return {
