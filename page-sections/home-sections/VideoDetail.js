@@ -17,7 +17,6 @@ const VideoDetail = props => {
   const videoUrl = `https://youtu.be/${videoId}`;
   const factor = 3;
 
-  console.log("video details:", props);
   return !props.detail.isLoading && videoId ? (
     <div className={classes.container}>
       <GridContainer spacing={6}>
