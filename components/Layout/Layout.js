@@ -4,13 +4,13 @@ import Head from "next/head";
 import Navbar from "../Navbar/Navbar";
 
 class Layout extends Component {
-  render() {
+  render(props) {
     return (
       <div style={{ marginTop: "90px" }}>
-        <Head>
+        <Head {...props}>
           <title>Search Vavel</title>
         </Head>
-        <Navbar />
+        <Navbar {...props} />
         {this.props.children}
       </div>
     );
