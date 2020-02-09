@@ -11,7 +11,8 @@ import {
   SET_ARTICLES_LOADING,
   GET_VIDEO_DETAIL,
   RESET_VIDEO_DETAIL,
-  SET_VIDEO_LOADING
+  SET_VIDEO_LOADING,
+  SET_SHOW_ADVACNED_SEARCH
 } from "./actionTypes";
 
 import {
@@ -24,8 +25,8 @@ import {
   VIDEO_DETAIL_URL
 } from "utils/Consts.js";
 
-import testVideosResponse from "./videos.js";
-import testDetail from "./detail.js";
+// import testVideosResponse from "./videos.js";
+// import testDetail from "./detail.js";
 
 export const getLocation = queryLang => async dispatch => {
   dispatch({ type: GET_LOCATION, payload: queryLang });
@@ -112,6 +113,10 @@ export const getVideoDetail = params => async dispatch => {
 
 export const resetVideoDetail = () => {
   return { type: RESET_VIDEO_DETAIL };
+};
+
+export const setShowAdvancedSearch = isShow => {
+  return { type: SET_SHOW_ADVACNED_SEARCH, payload: isShow };
 };
 
 export const setArticleTag = tag => {
