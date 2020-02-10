@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState } from "react";
 import {
   makeStyles,
@@ -180,16 +179,5 @@ const AdvanceSearchForm = props => {
       </form>
     </div>
   );
-=======
-import React from "react";
-
-import { makeStyles } from "@material-ui/core";
-import styles from "assets/jss/page-sections/home-sections/advanceSearchFormStyle.js";
-const useStyles = makeStyles(styles);
-
-const AdvanceSearchForm = props => {
-  const classes = useStyles();
-  return <div className={classes.container}>advanced search form</div>;
->>>>>>> 9e708c9bf9f29e6201b18e5a1fff6c6c59d0829a
 };
 export default AdvanceSearchForm;

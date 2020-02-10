@@ -35,11 +35,7 @@ const Index = props => {
   }, [location]);
 
   return (
-<<<<<<< HEAD
     <Layout {...props}>
-=======
-    <Layout>
->>>>>>> 9e708c9bf9f29e6201b18e5a1fff6c6c59d0829a
       <AdvanceSearchForm />
       <CategoriesSection {...props} />
       <ArticlesSection {...props} />
