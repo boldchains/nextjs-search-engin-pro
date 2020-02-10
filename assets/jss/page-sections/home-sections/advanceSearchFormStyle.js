@@ -1,5 +1,6 @@
 const advanceSearchFormStyle = theme => ({
   container: {
+<<<<<<< HEAD
     margin: "-4px 0 10px 0",
     minHeight: "400px",
     padding: "20px",
@@ -28,6 +29,11 @@ const advanceSearchFormStyle = theme => ({
   },
   nonePadding: {
     padding: "0px !important"
+=======
+    margin: "20px 0",
+    minHeight: "400px",
+    backgroundColor: "white"
+>>>>>>> 9e708c9bf9f29e6201b18e5a1fff6c6c59d0829a
   }
 });
 
